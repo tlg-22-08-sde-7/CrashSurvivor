@@ -31,7 +31,7 @@ After exiting the thick brush of the jungle, you see a river that looks to be al
 
 On the other side of the river you see what looks to be....PEOPLE!!!
 
-It seems to far away to signal for help. A better option would be to build a boat.
+It seems too far away to signal for help. A better option would be to build a boat.
 
 Gather the required supplies to build a boat. Remember, you can only carry so many items.
 
