@@ -65,3 +65,7 @@ You could encounter hostile animals and dangerous situations along the way.
 -Items
 
 -Location Enum
+
+###### **UML Diagram:**
+
+![img.png](img.png)
