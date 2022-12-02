@@ -1,0 +1,25 @@
+Goal:
+You will win the game by making it out of the jungle to civilization.
+
+Directions:
+You can move along the game by typing action commands, followed by the noun.
+Examples include: "go east", "go north".
+
+Player:
+You have health and hydration bars that need to be managed during the game.
+If either one of these reaches zero, you lose. You must eat foot and drink water to replenish these bars.
+Examples include: "eat apple", "drink water".
+
+Items:
+Items can be collected along the way to add to your backpack, with a maximum of 7 items.
+To collect an item, use grab, followed by the item.
+You must collect all key items and drop them off in the final location.
+Examples for collecting items include: "grab hammer", "grab wood", "grab apple"
+
+Wildlife:
+You will encounter wildlife along the way. You can choose to fight the wildlife, or flee.
+You will automatically go back to the direction you came from if you choose to flee.
+
+You can quit the game at any time by typing "quit".
+
+Good Luck!
