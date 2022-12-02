@@ -3,11 +3,11 @@ package com.crashsurvivor;
 class KeyItems {
     private String keyItemName;
 
-    private void addKeyItem(){
+    private void addKeyItem() {
 
     }
 
-    private void removeKeyItem(){
+    private void removeKeyItem() {
 
     }
 

@@ -50,9 +50,11 @@ public enum Map {
     Map(String description) {
         this.description = description;
     }
+
     public String getDescription() {
         return this.description;
     }
+
     public static Map fromString(String description) {
         for (Map b : Map.values()) {
             if (b.description.equalsIgnoreCase(description)) {
