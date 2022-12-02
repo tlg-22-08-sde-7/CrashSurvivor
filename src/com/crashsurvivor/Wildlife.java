@@ -5,17 +5,17 @@ class Wildlife {
     private int hp;
     private int attackPoints;
 
-    public Wildlife(String name, int hp, int attackPoints){
+    public Wildlife(String name, int hp, int attackPoints) {
         setName(name);
         setHp(hp);
         setAttackPoints(attackPoints);
     }
 
-    private void attack(){
+    private void attack() {
 
     }
 
-    private void retreat(){
+    private void retreat() {
 
     }
 

@@ -17,15 +17,15 @@ class Player {
 
     }
 
-    private void attack(){
+    private void attack() {
 
     }
 
-    private void eat(){
+    private void eat() {
 
     }
 
-    private void drink(){
+    private void drink() {
 
     }
 

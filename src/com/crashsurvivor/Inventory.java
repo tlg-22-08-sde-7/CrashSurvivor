@@ -2,16 +2,16 @@ package com.crashsurvivor;
 
 class Inventory {
 
-    private void showInventory(){
+    private void showInventory() {
 
     }
 
-    private void addToInventory(){
+    private void addToInventory() {
 
     }
 
-    private void removeFromInventory(){
+    private void removeFromInventory() {
 
     }
-    
+
 }
