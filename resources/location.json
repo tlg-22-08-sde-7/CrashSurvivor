@@ -1,0 +1,1021 @@
+
+{
+  "players": [
+    {
+      "name": "Arnold",
+      "strength": 100,
+      "speed": 50,
+      "health": 1000,
+      "hydration": 100
+    },
+    {
+      "name": "Jennifer",
+      "strength": 70,
+      "speed": 80,
+      "health": 1000,
+      "hydration": 100
+    },
+    {
+      "name": "Jason",
+      "strength": 90,
+      "speed": 60,
+      "health": 1000,
+      "hydration": 100
+    },
+    {
+      "name": "Scarlett",
+      "strength": 80,
+      "speed": 70,
+      "health": 1000,
+      "hydration": 100
+    }
+  ],
+  "wildlife": [
+    {
+      "name": "Monkey",
+      "strength": 30,
+      "speed": 70,
+      "health": 200
+    },
+    {
+      "name": "Wild Boar",
+      "strength": 50,
+      "speed": 50,
+      "health": 400
+    },
+    {
+      "name": "Bat",
+      "strength": 30,
+      "speed": 70,
+      "health": 200
+    },
+    {
+      "name": "Snake",
+      "strength": 40,
+      "speed": 60,
+      "health": 300
+    },
+    {
+      "name": "Rhino",
+      "strength": 90,
+      "speed": 40,
+      "health": 600
+    },
+    {
+      "name": "Crocodile",
+      "strength": 50,
+      "speed": 50,
+      "health": 400
+    }
+  ],
+
+  "startingLocation": "A0",
+  "endingLocation": "F6",
+  "locations": [
+    {
+      "name": "A0",
+      "description": "You are at the sight of the plane crash. You see a wall of jungle to the North and West.",
+      "items": ["flare", "flint", "pocket knife"],
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "A1"
+        },
+        {
+          "directionName": "South",
+          "place": "B0"
+        }
+      ]
+    },
+    {
+      "name": "A1",
+      "description": "You see a wall of jungle to the North.",
+      "items": [
+        {
+          "name": "water",
+          "hydration": 30
+        },
+        {
+          "name": "apple",
+          "health": 200
+        }
+      ],
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "A2"
+        },
+        {
+          "directionName": "South",
+          "place": "B1"
+        },
+        {
+          "directionName": "West",
+          "place": "A0"
+        }
+      ]
+    },
+    {
+      "name": "A2",
+      "description": "You see a wall of jungle to the North.",
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "A3"
+        },
+        {
+          "directionName": "South",
+          "place": "B2"
+        },
+        {
+          "directionName": "West",
+          "place": "A1"
+        }
+      ]
+    },
+    {
+      "name": "A3",
+      "description": "You see a wall of jungle to the North.",
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "A4"
+        },
+        {
+          "directionName": "South",
+          "place": "B3"
+        },
+        {
+          "directionName": "West",
+          "place": "A2"
+        }
+      ]
+    },
+    {
+      "name": "A4",
+      "description": "You see a wall of jungle to the North.",
+      "items": [
+        {
+          "name": "water",
+          "hydration": 30
+        },
+        {
+          "name": "spear",
+          "strength": 50
+        }
+      ],
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "A5"
+        },
+        {
+          "directionName": "South",
+          "place": "B4"
+        },
+        {
+          "directionName": "West",
+          "place": "A3"
+        }
+      ]
+    },
+    {
+      "name": "A5",
+      "description": "You see a wall of jungle to the North.",
+      "wildlifeInLocation": [
+        "Monkey"
+      ],
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "A6"
+        },
+        {
+          "directionName": "South",
+          "place": "B5"
+        },
+        {
+          "directionName": "West",
+          "place": "A4"
+        }
+      ]
+    },
+    {
+      "name": "A6",
+      "description": "You see a wall of jungle to the North and East.",
+      "keyItems": ["hammer"],
+      "directions": [
+        {
+          "directionName": "West",
+          "place": "A5"
+        },
+        {
+          "directionName": "South",
+          "place": "B6"
+        }
+      ]
+    },
+    {
+      "name": "B0",
+      "description": "You see a wall of jungle to the West.",
+      "wildlifeInLocation": [
+        "Crocodile"
+      ],
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "B1"
+        },
+        {
+          "directionName": "South",
+          "place": "C0"
+        },
+        {
+          "directionName": "North",
+          "place": "A0"
+        }
+      ]
+    },
+    {
+      "name": "B1",
+      "description": "",
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "B2"
+        },
+        {
+          "directionName": "South",
+          "place": "C1"
+        },
+        {
+          "directionName": "North",
+          "place": "A1"
+        },
+        {
+          "directionName": "West",
+          "place": "B0"
+        }
+      ]
+    },
+    {
+      "name": "B2",
+      "description": "",
+      "items": [
+        {
+          "name": "water",
+          "hydration": 30
+        },
+        {
+          "name": "banana",
+          "health": 300
+        }
+      ],
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "B3"
+        },
+        {
+          "directionName": "South",
+          "place": "C2"
+        },
+        {
+          "directionName": "North",
+          "place": "A2"
+        },
+        {
+          "directionName": "West",
+          "place": "B1"
+        }
+      ]
+    },
+    {
+      "name": "B3",
+      "description": "",
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "B4"
+        },
+        {
+          "directionName": "South",
+          "place": "C3"
+        },
+        {
+          "directionName": "North",
+          "place": "A3"
+        },
+        {
+          "directionName": "West",
+          "place": "B2"
+        }
+      ]
+    },
+    {
+      "name": "B4",
+      "description": "",
+      "keyItems": ["wood"],
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "B5"
+        },
+        {
+          "directionName": "South",
+          "place": "C4"
+        },
+        {
+          "directionName": "North",
+          "place": "A4"
+        },
+        {
+          "directionName": "West",
+          "place": "B3"
+        }
+      ]
+    },
+    {
+      "name": "B5",
+      "description": "",
+      "wildlifeInLocation": [
+        "Wild Boar"
+      ],
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "B6"
+        },
+        {
+          "directionName": "South",
+          "place": "C5"
+        },
+        {
+          "directionName": "North",
+          "place": "A5"
+        },
+        {
+          "directionName": "West",
+          "place": "B4"
+        }
+      ]
+    },
+    {
+      "name": "B6",
+      "description": "You see a wall of jungle to the East.",
+      "directions": [
+        {
+          "directionName": "South",
+          "place": "C6"
+        },
+        {
+          "directionName": "North",
+          "place": "A6"
+        },
+        {
+          "directionName": "West",
+          "place": "B5"
+        }
+      ]
+    },
+    {
+      "name": "C0",
+      "description": "You see a wall of jungle to the West.",
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "C1"
+        },
+        {
+          "directionName": "South",
+          "place": "D0"
+        },
+        {
+          "directionName": "North",
+          "place": "B0"
+        }
+      ]
+    },
+    {
+      "name": "C1",
+      "description": "",
+      "keyItems": ["boat ore"],
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "C2"
+        },
+        {
+          "directionName": "South",
+          "place": "D1"
+        },
+        {
+          "directionName": "North",
+          "place": "B1"
+        },
+        {
+          "directionName": "West",
+          "place": "C0"
+        }
+      ]
+    },
+    {
+      "name": "C2",
+      "description": "",
+      "wildlifeInLocation": [
+        "Rhino"
+      ],
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "C3"
+        },
+        {
+          "directionName": "South",
+          "place": "D2"
+        },
+        {
+          "directionName": "North",
+          "place": "B2"
+        },
+        {
+          "directionName": "West",
+          "place": "C1"
+        }
+      ]
+    },
+    {
+      "name": "C3",
+      "description": "",
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "C4"
+        },
+        {
+          "directionName": "South",
+          "place": "D3"
+        },
+        {
+          "directionName": "North",
+          "place": "B3"
+        },
+        {
+          "directionName": "West",
+          "place": "C2"
+        }
+      ]
+    },
+    {
+      "name": "C4",
+      "description": "",
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "C5"
+        },
+        {
+          "directionName": "South",
+          "place": "D4"
+        },
+        {
+          "directionName": "North",
+          "place": "B4"
+        },
+        {
+          "directionName": "West",
+          "place": "C3"
+        }
+      ]
+    },
+    {
+      "name": "C5",
+      "description": "",
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "C6"
+        },
+        {
+          "directionName": "South",
+          "place": "D5"
+        },
+        {
+          "directionName": "North",
+          "place": "B5"
+        },
+        {
+          "directionName": "West",
+          "place": "C4"
+        }
+      ]
+    },
+    {
+      "name": "C6",
+      "description": "You see a wall of jungle to the East.",
+      "wildlifeInLocation": [
+        "Monkey"
+      ],
+      "directions": [
+        {
+          "directionName": "South",
+          "place": "D6"
+        },
+        {
+          "directionName": "North",
+          "place": "B6"
+        },
+        {
+          "directionName": "West",
+          "place": "C5"
+        }
+      ]
+    },
+    {
+      "name": "D0",
+      "description": "You see a wall of jungle to the West.",
+      "keyItems": ["nails"],
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "D1"
+        },
+        {
+          "directionName": "South",
+          "place": "E0"
+        },
+        {
+          "directionName": "North",
+          "place": "C0"
+        }
+      ]
+    },
+    {
+      "name": "D1",
+      "description": "",
+      "wildlifeInLocation": [
+        "Bat"
+      ],
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "D2"
+        },
+        {
+          "directionName": "South",
+          "place": "E1"
+        },
+        {
+          "directionName": "North",
+          "place": "C1"
+        },
+        {
+          "directionName": "West",
+          "place": "D0"
+        }
+      ]
+    },
+    {
+      "name": "D2",
+      "description": "",
+      "items": [
+        {
+          "name": "water",
+          "hydration": 30
+        },
+        {
+          "name": "machete",
+          "strength": 30
+        }
+      ],
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "D3"
+        },
+        {
+          "directionName": "South",
+          "place": "E2"
+        },
+        {
+          "directionName": "North",
+          "place": "C2"
+        },
+        {
+          "directionName": "West",
+          "place": "D1"
+        }
+      ]
+    },
+    {
+      "name": "D3",
+      "description": "",
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "D4"
+        },
+        {
+          "directionName": "South",
+          "place": "E3"
+        },
+        {
+          "directionName": "North",
+          "place": "C3"
+        },
+        {
+          "directionName": "West",
+          "place": "D2"
+        }
+      ]
+    },
+    {
+      "name": "D4",
+      "description": "",
+      "wildlifeInLocation": [
+        "Snake"
+      ],
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "D5"
+        },
+        {
+          "directionName": "South",
+          "place": "E4"
+        },
+        {
+          "directionName": "North",
+          "place": "C4"
+        },
+        {
+          "directionName": "West",
+          "place": "D3"
+        }
+      ]
+    },
+    {
+      "name": "D5",
+      "description": "",
+      "keyItems": ["sealant"],
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "D6"
+        },
+        {
+          "directionName": "South",
+          "place": "E5"
+        },
+        {
+          "directionName": "North",
+          "place": "C5"
+        },
+        {
+          "directionName": "West",
+          "place": "D4"
+        }
+      ]
+    },
+    {
+      "name": "D6",
+      "description": "You see a wall of jungle to the East.",
+      "items": [
+        {
+          "name": "water",
+          "hydration": 30
+        },
+        {
+          "name": "apple",
+          "health": 200
+        }
+      ],
+      "directions": [
+        {
+          "directionName": "South",
+          "place": "E6"
+        },
+        {
+          "directionName": "North",
+          "place": "C6"
+        },
+        {
+          "directionName": "West",
+          "place": "D5"
+        }
+      ]
+    },
+    {
+      "name": "E0",
+      "description": "You see a wall of jungle to the West.",
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "E1"
+        },
+        {
+          "directionName": "South",
+          "place": "F0"
+        },
+        {
+          "directionName": "North",
+          "place": "D0"
+        }
+      ]
+    },
+    {
+      "name": "E1",
+      "description": "",
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "E2"
+        },
+        {
+          "directionName": "South",
+          "place": "F1"
+        },
+        {
+          "directionName": "North",
+          "place": "D1"
+        },
+        {
+          "directionName": "West",
+          "place": "E0"
+        }
+      ]
+    },
+    {
+      "name": "E2",
+      "description": "",
+      "keyItems": ["wood"],
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "E3"
+        },
+        {
+          "directionName": "South",
+          "place": "F2"
+        },
+        {
+          "directionName": "North",
+          "place": "D2"
+        },
+        {
+          "directionName": "West",
+          "place": "E1"
+        }
+      ]
+    },
+    {
+      "name": "E3",
+      "description": "",
+      "items": [
+        {
+          "name": "coconut",
+          "hydration": 30,
+          "health": 100
+        }
+      ],
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "E4"
+        },
+        {
+          "directionName": "South",
+          "place": "F3"
+        },
+        {
+          "directionName": "North",
+          "place": "D3"
+        },
+        {
+          "directionName": "West",
+          "place": "E2"
+        }
+      ]
+    },
+    {
+      "name": "E4",
+      "description": "",
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "E5"
+        },
+        {
+          "directionName": "South",
+          "place": "F4"
+        },
+        {
+          "directionName": "North",
+          "place": "D4"
+        },
+        {
+          "directionName": "West",
+          "place": "E3"
+        }
+      ]
+    },
+    {
+      "name": "E5",
+      "description": "",
+      "keyItems": ["flashlight"],
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "E6"
+        },
+        {
+          "directionName": "South",
+          "place": "F5"
+        },
+        {
+          "directionName": "North",
+          "place": "D5"
+        },
+        {
+          "directionName": "West",
+          "place": "E4"
+        }
+      ]
+    },
+    {
+      "name": "E6",
+      "description": "You see a wall of jungle to the East.",
+      "directions": [
+        {
+          "directionName": "South",
+          "place": "F6"
+        },
+        {
+          "directionName": "North",
+          "place": "D6"
+        },
+        {
+          "directionName": "West",
+          "place": "E5"
+        }
+      ]
+    },
+    {
+      "name": "F0",
+      "description": "You see a wall of jungle to the South and West.",
+      "items": [
+        {
+          "name": "water",
+          "hydration": 30
+        },
+        {
+          "name": "banana",
+          "health": 300
+        }
+      ],
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "F1"
+        },
+        {
+          "directionName": "North",
+          "place": "E0"
+        }
+      ]
+    },
+    {
+      "name": "F1",
+      "description": "You see a wall of jungle to the South.",
+      "wildlifeInLocation": [
+        "Wild Boar"
+      ],
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "F2"
+        },
+        {
+          "directionName": "North",
+          "place": "E1"
+        },
+        {
+          "directionName": "West",
+          "place": "F0"
+        }
+      ]
+    },
+    {
+      "name": "F2",
+      "description": "You see a wall of jungle to the South.",
+      "items": [
+        {
+          "name": "apple",
+          "health": 200
+        }
+      ],
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "F3"
+        },
+        {
+          "directionName": "North",
+          "place": "E2"
+        },
+        {
+          "directionName": "West",
+          "place": "F1"
+        }
+      ]
+    },
+    {
+      "name": "F3",
+      "description": "You see a wall of jungle to the South.",
+      "items": [
+        {
+          "name": "water",
+          "hydration": 30
+        }
+      ],
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "F4"
+        },
+        {
+          "directionName": "North",
+          "place": "E3"
+        },
+        {
+          "directionName": "West",
+          "place": "F2"
+        }
+      ]
+    },
+    {
+      "name": "F4",
+      "description": "You see a wall of jungle to the South.",
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "F5"
+        },
+        {
+          "directionName": "North",
+          "place": "E4"
+        },
+        {
+          "directionName": "West",
+          "place": "F3"
+        }
+      ]
+    },
+    {
+      "name": "F5",
+      "description": "You see a wall of jungle to the South.",
+      "keyItems": ["boat motor"],
+      "directions": [
+        {
+          "directionName": "East",
+          "place": "F6"
+        },
+        {
+          "directionName": "North",
+          "place": "E4"
+        },
+        {
+          "directionName": "West",
+          "place": "F4"
+        }
+      ]
+    },
+    {
+      "name": "F6",
+      "description": "Through the opening of the jungle, you approach a river.",
+      "items": [
+        {
+          "name": "water",
+          "hydration": 30
+        },
+        {
+          "name": "running shoes",
+          "speed": 50
+        }
+      ],
+      "directions": [
+        {
+          "directionName": "North",
+          "place": "E6"
+        },
+        {
+          "directionName": "West",
+          "place": "F5"
+        }
+      ]
+    }
+
+  ]
+
+
+}
