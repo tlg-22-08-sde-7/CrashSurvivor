@@ -6,28 +6,32 @@
       "strength": 100,
       "speed": 50,
       "health": 1000,
-      "hydration": 100
+      "hydration": 100,
+      "currentLocation": "A0"
     },
     {
       "name": "Jennifer",
       "strength": 70,
       "speed": 80,
       "health": 1000,
-      "hydration": 100
+      "hydration": 100,
+      "currentLocation": "A0"
     },
     {
       "name": "Jason",
       "strength": 90,
       "speed": 60,
       "health": 1000,
-      "hydration": 100
+      "hydration": 100,
+      "currentLocation": "A0"
     },
     {
       "name": "Scarlett",
       "strength": 80,
       "speed": 70,
       "health": 1000,
-      "hydration": 100
+      "hydration": 100,
+      "currentLocation": "A0"
     }
   ],
   "wildlife": [

@@ -1,18 +1,20 @@
 package com.crashsurvivor;
 
 class Player {
+    private String currentLocation = "A0";
     private String name;
     private int health;
     private int hydration;
     private int strength;
     private int speed;
 
-    public Player(String name, int health, int hydration, int strength, int speed) {
+    public Player(String name, int health, int hydration, int strength, int speed, String currentLocation) {
         setSpeed(speed);
         setName(name);
         setHealth(health);
         setHydration(hydration);
         setStrength(strength);
+        setCurrentLocation(currentLocation);
     }
 
     private void move() {
@@ -32,6 +34,10 @@ class Player {
     }
 
     private void build() {
+
+    }
+
+    public void currentLocation() {
 
     }
 
@@ -73,5 +79,19 @@ class Player {
 
     public void setSpeed(int speed) {
         this.speed = speed;
+    }
+
+    public String getCurrentLocation() {
+        return currentLocation;
+    }
+
+    public void setCurrentLocation(String currentLocation) {
+        this.currentLocation = currentLocation;
+    }
+
+    @Override
+    public String toString() {
+        return  getName() + " | HP = " + getHealth() + " | hydration = " + getHydration() + " | strength = "
+                + getStrength() + " | speed = " + getSpeed();
     }
 }

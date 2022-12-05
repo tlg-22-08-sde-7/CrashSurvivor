@@ -3,17 +3,16 @@ package com.crashsurvivor;
 import java.util.List;
 
 class Location {
+
     private final String name;
-    private final String description;
     public List<String> items = null;
     public List<Direction> directions = null;
     public List<String> wildlifeInLocation = null;
     public List<String> keyItems = null;
 
 
-    public Location(String name, String description) {
+    public Location(String name) {
         this.name = name;
-        this.description = description;
     }
 
     public List<String> getItems() {
@@ -48,12 +47,13 @@ class Location {
         this.keyItems = keyItems;
     }
 
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return name;
     }
+
     @Override
     public String toString() {
-        return name;
+        return getName();
     }
 
 }
