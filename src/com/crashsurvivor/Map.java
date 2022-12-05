@@ -1,4 +1,4 @@
-package src.com.crashsurvivor;
+package com.crashsurvivor;
 
 public enum Map {
     A0("You are standing on the outside of your jet. " +
