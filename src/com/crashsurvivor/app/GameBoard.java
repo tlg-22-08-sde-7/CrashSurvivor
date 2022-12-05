@@ -60,7 +60,7 @@ public class GameBoard {
         System.out.println("2) Load Saved Game");
         System.out.println("3) See Instructions");
         System.out.println();
-        String choiceInput = prompter.prompt("What would you like to do? (1, 2, or 3):\n>", "1|2|3|quit",
+        String choiceInput = prompter.prompt("What would you like to do? (1, 2, or 3):\n>", "1|2|3|quit|help",
                 "Invalid Category. Please choose 1, 2, or 3.");
 
         if (choiceInput.equals("1")) {
@@ -85,7 +85,7 @@ public class GameBoard {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String choiceInput = prompter.prompt("Please choose starting item\n>", "flare|flint|pocket knife|quit", "Please choose something to survive with!");
+        String choiceInput = prompter.prompt("Please choose starting item\n>", "flare|flint|pocket knife|quit|help", "Please choose something to survive with!");
         choiceInput.toLowerCase();
         if (choiceInput.equals("flare")) {
             showBoard();
@@ -98,6 +98,9 @@ public class GameBoard {
         }
         if (choiceInput.equals("quit")) {
             quitGame(2);
+        }
+        if (choiceInput.equals("help")) {
+            showInstructions();
         }
 
 
@@ -118,13 +121,16 @@ public class GameBoard {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String choiceInput = prompter.prompt("To leave, type exit\n>", "exit|quit", "Please type exit to leave!");
+        String choiceInput = prompter.prompt("To leave, type exit\n>", "exit|quit|help", "Please type exit to leave!");
         choiceInput.toLowerCase();
         if (choiceInput.equals("exit")) {
             promptStartGame();
         }
         if (choiceInput.equals("quit")) {
             quitGame(3);
+        }
+        if (choiceInput.equals("help")) {
+            showInstructions();
         }
     }
 
