@@ -50,6 +50,7 @@ public class GameBoard {
     }
 
     private void showBoard() {
+        System.out.println("board right here");
 
     }
 
@@ -75,6 +76,28 @@ public class GameBoard {
     }
 
     private void startGame() {
+        try (BufferedReader br = new BufferedReader(new FileReader("CrashSurvivor/resources/intro.txt"))) {
+            String line1;
+            while ((line1 = br.readLine()) != null) {
+                System.out.println(line1);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String choiceInput = prompter.prompt("Please choose starting item\n>", "flare|flint|pocket knife", "Please choose something to survive with!");
+        choiceInput.toLowerCase();
+        if (choiceInput.equals("flare")) {
+            showBoard();
+        }
+        if (choiceInput.equals("flint")) {
+            showBoard();
+        }
+        if(choiceInput.equals("pocket knife")){
+            showBoard();
+        }
+
+
     }
 
     private void loadSavedGame() {
