@@ -2,15 +2,17 @@ package com.crashsurvivor;
 
 class Player {
     private String name;
-    private int hp;
+    private int health;
     private int hydration;
-    private int attackPoints;
+    private int strength;
+    private int speed;
 
-    public Player(String name, int hp, int hydration, int attackPoints) {
+    public Player(String name, int health, int hydration, int strength, int speed) {
+        setSpeed(speed);
         setName(name);
-        setHp(hp);
+        setHealth(health);
         setHydration(hydration);
-        setAttackPoints(attackPoints);
+        setStrength(strength);
     }
 
     private void move() {
@@ -41,12 +43,12 @@ class Player {
         this.name = name;
     }
 
-    public int getHp() {
-        return hp;
+    public int getHealth() {
+        return health;
     }
 
-    public void setHp(int hp) {
-        this.hp = hp;
+    public void setHealth(int health) {
+        this.health = health;
     }
 
     public int getHydration() {
@@ -57,11 +59,19 @@ class Player {
         this.hydration = hydration;
     }
 
-    public int getAttackPoints() {
-        return attackPoints;
+    public int getStrength() {
+        return strength;
     }
 
-    public void setAttackPoints(int attackPoints) {
-        this.attackPoints = attackPoints;
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 }
