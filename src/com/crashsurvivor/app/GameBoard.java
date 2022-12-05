@@ -23,7 +23,6 @@ public class GameBoard {
         while (isRunning) {
             promptStartGame();
         }
-        showBoard();
     }
 
     private void welcome() {
@@ -69,10 +68,11 @@ public class GameBoard {
         } else if (choiceInput.equals("2")) {
             loadSavedGame();
         } else if (choiceInput.equals("quit")) {
-            quitGame();
+            quitGame(1);
         } else {
             showInstructions();
         }
+        isRunning = false;
     }
 
     private void startGame() {
@@ -85,7 +85,7 @@ public class GameBoard {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String choiceInput = prompter.prompt("Please choose starting item\n>", "flare|flint|pocket knife", "Please choose something to survive with!");
+        String choiceInput = prompter.prompt("Please choose starting item\n>", "flare|flint|pocket knife|quit", "Please choose something to survive with!");
         choiceInput.toLowerCase();
         if (choiceInput.equals("flare")) {
             showBoard();
@@ -96,11 +96,15 @@ public class GameBoard {
         if(choiceInput.equals("pocket knife")){
             showBoard();
         }
+        if (choiceInput.equals("quit")) {
+            quitGame(2);
+        }
 
 
     }
 
     private void loadSavedGame() {
+        System.out.println("loadSavedGame");
     }
 
     private void showInstructions() {
@@ -120,11 +124,11 @@ public class GameBoard {
             promptStartGame();
         }
         if (choiceInput.equals("quit")) {
-            quitGame();
+            quitGame(3);
         }
     }
 
-    private void quitGame() {
+    private void quitGame(int stage) {
         Scanner input = new Scanner(System.in);
         String inputQuit = prompter.prompt("Are you sure you want to quit the game?( yes or no ): \n>", "yes|no", "Invalid input!");
         inputQuit.toLowerCase();
@@ -144,6 +148,19 @@ public class GameBoard {
             }
             System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
             System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
+        } else {
+           switch (stage){
+               case 1:
+                   promptStartGame();
+                   break;
+               case 2:
+                   startGame();
+                   break;
+               case 3:
+                   showInstructions();
+                   break;
+               default:
+           }
         }
     }
 }
