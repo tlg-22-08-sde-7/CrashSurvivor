@@ -1,7 +1,7 @@
 package com.crashsurvivor;
 
 class Player {
-    private String currentLocation = "A0";
+    private static String currentLocation = "A0";
     private String name;
     private int health;
     private int hydration;
@@ -81,12 +81,12 @@ class Player {
         this.speed = speed;
     }
 
-    public String getCurrentLocation() {
+    public static String getCurrentLocation() {
         return currentLocation;
     }
 
     public void setCurrentLocation(String currentLocation) {
-        this.currentLocation = currentLocation;
+        Player.currentLocation = currentLocation;
     }
 
     @Override
