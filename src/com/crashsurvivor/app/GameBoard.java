@@ -24,13 +24,26 @@ public class GameBoard {
     Player player = new Player("Arnold", 1000, 100, 100, 50, "A1");
 
     public void execute() {
+        clearConsole();
         welcome();
+        pressToContinue();
+        clearConsole();
         isRunning = true;
         while (isRunning) {
+            clearConsole();
             promptStartGame();
         }
     }
+    private void clearConsole(){
+        for (int i = 0; i < 100; i++) {
+            System.out.println();
+        }
+    }
 
+    private void pressToContinue() {
+        prompter = new Prompter(new Scanner(System.in));
+        prompter.prompt("\nPress 'c' to continue...", "c", "Invalid Category. Please press 'c'");
+    }
     private void welcome() {
         System.out.println();
         System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
@@ -56,9 +69,8 @@ public class GameBoard {
 
     private void showBoard() {
         System.out.println("board right here");
-        getDescriptionPrompt();
+        clearConsole();
         getDirectionPrompt();
-
     }
 
     private void promptStartGame() {
@@ -72,8 +84,10 @@ public class GameBoard {
                 "Invalid Category. Please choose 1, 2, or 3.");
 
         if (choiceInput.equals("1")) {
+            clearConsole();
             startGame();
         } else if (choiceInput.equals("2")) {
+            clearConsole();
             loadSavedGame();
         } else if (choiceInput.equals("quit")) {
             quitGame(1);
@@ -111,9 +125,6 @@ public class GameBoard {
             showInstructions();
         }
     }
-    private void getDescriptionPrompt() {
-
-    }
 
     private void getDirectionPrompt() {
         try {
@@ -129,7 +140,7 @@ public class GameBoard {
                 directionsStr.append(" \n");
             }
 
-            String directionPrompt = "What is going to be your next destination? \n" +directionsStr.toString()+ ">";
+            String directionPrompt = "Choose your next destination wisely, " + player.getName() + "? \n" +directionsStr.toString()+ ">";
             String directionOptions = convertToPromptOption(allDirections);
             String directionErrMsg = "Invalid input!(Case Sensitive)";
 
