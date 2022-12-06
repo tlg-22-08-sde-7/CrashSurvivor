@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class MapBoard {
     private Prompter prompter = new Prompter(new Scanner(System.in));
-    String currentPlayer;
+    private String ignoredExtraValueInput;
 
     File input = new File("CrashSurvivor/resources/location.json");
 
@@ -173,9 +173,6 @@ public class MapBoard {
         }
         return directions;
     }
-    public String currentPlayerData(String currentPlayer) {
-        return currentPlayer;
-    }
 
     public String printPlayerData() throws FileNotFoundException {
         System.out.println("Choose from the following characters (" +
@@ -187,44 +184,47 @@ public class MapBoard {
         scarlettData();
         String valueInput = prompter.prompt("Type your choice> ", "(?i)arnold|jennifer|jason|scarlett",
                 "Please select a valid character!");
-        String ignoredExtraValueInput = valueInput.toLowerCase();
-        switch (ignoredExtraValueInput) {
-            case "arnold":
-                currentPlayer = arnoldData();
-                return currentPlayer;
-            case "jennifer":
-                return jenniferData();
-            case "jason":
-                return jasonData();
-            case "scarlett":
-                return scarlettData();
-            default:
-                return printPlayerData();
+        ignoredExtraValueInput = valueInput.toLowerCase();
+
+        return ignoredExtraValueInput;
+    }
+    private void currentPlayerData() throws FileNotFoundException {
+
+        if ("arnold".equals(ignoredExtraValueInput)) {
+            arnoldData();
+
+        } else if ("jennifer".equals(ignoredExtraValueInput)) {
+            jenniferData();
+
+        } else if ("jason".equals(ignoredExtraValueInput)) {
+            jasonData();
+
+        } else if ("scarlett".equals(ignoredExtraValueInput)){
+            scarlettData();
+        } else {
+            printPlayerData();
         }
     }
 
-    private String scarlettData() throws FileNotFoundException {
+
+    private void scarlettData() throws FileNotFoundException {
         List<Player> data = getPlayerData();
         scarlett(data);
-        return null;
     }
 
-    private String jasonData() throws FileNotFoundException {
+    private void jasonData() throws FileNotFoundException {
         List<Player> data = getPlayerData();
         jason(data);
-        return null;
     }
 
-    private String jenniferData() throws FileNotFoundException {
+    private void jenniferData() throws FileNotFoundException {
         List<Player> data = getPlayerData();
         jennifer(data);
-        return null;
     }
 
-    private String arnoldData() throws FileNotFoundException {
+    private void arnoldData() throws FileNotFoundException {
         List<Player> data = getPlayerData();
         arnold(data);
-        return null;
     }
 
     private List<Player> getPlayerData() throws FileNotFoundException {
@@ -289,7 +289,7 @@ public class MapBoard {
         }
     }
     // show all of the items at location
-    private List<Items> showItemsAtLocation() throws FileNotFoundException {
+    private void showItemsAtLocation() throws FileNotFoundException {
         List<Items> items = new ArrayList<>();
         JsonElement fileElement = JsonParser.parseReader(new FileReader(input));
         JsonObject fileObject = fileElement.getAsJsonObject();
@@ -314,18 +314,18 @@ public class MapBoard {
                 System.out.println(items);
             }
         }
-        return items;
     }
 
     public static void main(String[] args) throws FileNotFoundException {
 
         MapBoard map = new MapBoard();
-        map.printPlayerData();
+        String playerInfo = map.printPlayerData();
         map.printMap();
         map.printDescriptionData();
+        map.currentPlayerData();
         map.showItemsAtLocation();
 
-        System.out.println();
+
 
     }
 }
