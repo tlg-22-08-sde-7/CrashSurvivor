@@ -1,17 +1,25 @@
 package com.crashsurvivor;
 
-class Player {
+public class Player {
+    private static String currentLocation = "A1";
     private String name;
-    private int hp;
+    private int health;
     private int hydration;
-    private int attackPoints;
+    private int strength;
+    private int speed;
+    String currentPlayer;
 
-    public Player(String name, int hp, int hydration, int attackPoints) {
+    public Player(String name, int health, int hydration, int strength, int speed, String currentLocation) {
+        setSpeed(speed);
         setName(name);
-        setHp(hp);
+        setHealth(health);
         setHydration(hydration);
-        setAttackPoints(attackPoints);
+        setStrength(strength);
+        setCurrentLocation(currentLocation);
     }
+
+
+
 
     private void move() {
 
@@ -33,6 +41,10 @@ class Player {
 
     }
 
+    public void currentLocation() {
+
+    }
+
     public String getName() {
         return name;
     }
@@ -41,12 +53,12 @@ class Player {
         this.name = name;
     }
 
-    public int getHp() {
-        return hp;
+    public int getHealth() {
+        return health;
     }
 
-    public void setHp(int hp) {
-        this.hp = hp;
+    public void setHealth(int health) {
+        this.health = health;
     }
 
     public int getHydration() {
@@ -57,11 +69,41 @@ class Player {
         this.hydration = hydration;
     }
 
-    public int getAttackPoints() {
-        return attackPoints;
+    public int getStrength() {
+        return strength;
     }
 
-    public void setAttackPoints(int attackPoints) {
-        this.attackPoints = attackPoints;
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public static String getCurrentLocation() {
+        return currentLocation;
+    }
+
+    public void setCurrentLocation(String currentLocation) {
+        Player.currentLocation = currentLocation;
+    }
+
+    public String getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(String currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    @Override
+    public String toString() {
+        return  getName() + " | HP = " + getHealth() + " | hydration = " + getHydration() + " | strength = "
+                + getStrength() + " | speed = " + getSpeed();
     }
 }
