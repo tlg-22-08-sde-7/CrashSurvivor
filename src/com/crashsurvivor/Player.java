@@ -7,6 +7,7 @@ public class Player {
     private int hydration;
     private int strength;
     private int speed;
+    String currentPlayer;
 
     public Player(String name, int health, int hydration, int strength, int speed, String currentLocation) {
         setSpeed(speed);
@@ -16,6 +17,9 @@ public class Player {
         setStrength(strength);
         setCurrentLocation(currentLocation);
     }
+
+
+
 
     private void move() {
 
@@ -87,6 +91,14 @@ public class Player {
 
     public void setCurrentLocation(String currentLocation) {
         Player.currentLocation = currentLocation;
+    }
+
+    public String getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(String currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
     @Override
