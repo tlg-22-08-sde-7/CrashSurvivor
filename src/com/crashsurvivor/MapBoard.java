@@ -137,10 +137,35 @@ public class MapBoard {
                 descriptions.add(place);
                 System.out.println(place);
                 System.out.println();
-            } else {
-                break;
             }
         }
+    }
+
+    // get all directions
+    public List<Direction> getAllDirections() throws FileNotFoundException{
+        List<Direction> directions = new ArrayList<>();
+
+        JsonElement fileElement = JsonParser.parseReader(new FileReader(input));
+        JsonObject fileObject = fileElement.getAsJsonObject();
+        JsonArray jsonArrayOfLocations = fileObject.get("locations").getAsJsonArray();
+
+        for (JsonElement locationElement : jsonArrayOfLocations) {
+            JsonObject locationJsonObject = locationElement.getAsJsonObject();
+            String name = locationJsonObject.get("name").getAsString();
+            JsonArray allDirections = locationJsonObject.get("directions").getAsJsonArray();
+
+            if (Objects.equals(Player.getCurrentLocation(), name)) {
+                for (JsonElement directionElement : allDirections) {
+                    JsonObject directionJsonObject = directionElement.getAsJsonObject();
+                    String directionName = directionJsonObject.get("directionName").getAsString();
+                    String place = directionJsonObject.get("place").getAsString();
+
+                    Direction direction = new Direction(directionName, place);
+                    directions.add(direction);
+                }
+            }
+        }
+        return directions;
     }
 
     public void printPlayerData() throws FileNotFoundException {

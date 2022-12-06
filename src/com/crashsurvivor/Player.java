@@ -1,7 +1,7 @@
 package com.crashsurvivor;
 
-class Player {
-    private static String currentLocation = "A0";
+public class Player {
+    private static String currentLocation = "A1";
     private String name;
     private int health;
     private int hydration;
