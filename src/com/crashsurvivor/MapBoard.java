@@ -3,6 +3,7 @@ package com.crashsurvivor;
 import com.google.gson.*;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -10,6 +11,7 @@ import java.util.Objects;
 public class MapBoard {
 
     File input = new File("CrashSurvivor/resources/location.json");
+
 
     public void printMap() {
         // make path of json into a variable
@@ -127,15 +129,16 @@ public class MapBoard {
     }
 
     private void allLocationDescriptions(JsonArray jsonArrayOfLocations, List<Description> descriptions) {
+
         for (JsonElement locationElement : jsonArrayOfLocations) {
             JsonObject locationJsonObject = locationElement.getAsJsonObject();
             String name = locationJsonObject.get("name").getAsString();
             String description = locationJsonObject.get("description").getAsString();
 
             if (Objects.equals(Player.getCurrentLocation(), name)) {
+                System.out.println(description);
                 Description place = new Description(description);
                 descriptions.add(place);
-                System.out.println(place);
                 System.out.println();
             }
         }
@@ -258,11 +261,39 @@ public class MapBoard {
 
         }
     }
+    private List<Items> showItemsAtLocation() throws FileNotFoundException {
+        List<Items> items = new ArrayList<>();
+        JsonElement fileElement = JsonParser.parseReader(new FileReader(input));
+        JsonObject fileObject = fileElement.getAsJsonObject();
+
+        JsonArray jsonArrayOfLocations = fileObject.get("locations").getAsJsonArray();
+        for (JsonElement jsonLocationElement : jsonArrayOfLocations) {
+            JsonObject jsonObjectOfItems = jsonLocationElement.getAsJsonObject();
+            String name = jsonObjectOfItems.get("name").getAsString();
+            JsonArray jsonArrayOfItems = jsonObjectOfItems.get("items").getAsJsonArray();
+
+            if (Objects.equals(Player.getCurrentLocation(), name)) {
+                for (JsonElement itemElement : jsonArrayOfItems) {
+
+                    JsonObject itemJsonObject = itemElement.getAsJsonObject();
+                    String itemName = itemJsonObject.get("name").getAsString();
+                    JsonElement hydration = itemJsonObject.get("hydration");
+                    JsonElement health = itemJsonObject.get("health");
+                    Items itemsAtLocation = new Items(itemName, hydration.getAsInt(), health.getAsInt());
+                    items.add(itemsAtLocation);
+
+                }
+                System.out.println(items);
+            }
+        }
+        return items;
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
         MapBoard map = new MapBoard();
         map.printMap();
         map.printDescriptionData();
+        map.showItemsAtLocation();
         map.arnoldData();
 
     }

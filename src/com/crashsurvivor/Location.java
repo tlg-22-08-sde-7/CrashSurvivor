@@ -5,7 +5,6 @@ import java.util.List;
 class Location {
 
     private final String name;
-    public List<String> items = null;
     public List<Direction> directions = null;
     public List<String> wildlifeInLocation = null;
     public List<String> keyItems = null;
@@ -13,14 +12,6 @@ class Location {
 
     public Location(String name) {
         this.name = name;
-    }
-
-    public List<String> getItems() {
-        return items;
-    }
-
-    public void setItems(List<String> items) {
-        this.items = items;
     }
 
     public List<Direction> getDirections() {
