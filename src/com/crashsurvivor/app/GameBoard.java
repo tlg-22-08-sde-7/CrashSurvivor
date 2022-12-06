@@ -1,21 +1,27 @@
 package com.crashsurvivor.app;
 
-import com.apps.util.Console;
 import com.apps.util.Prompter;
+import com.crashsurvivor.Direction;
+import com.crashsurvivor.MapBoard;
+import com.crashsurvivor.Player;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 public class GameBoard {
 
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_YELLOW = "\u001B[33m";
     public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_BLUE = "\u001B[34m";
     private static boolean isRunning = false;
     private Prompter prompter;
+
+    MapBoard mapBoard = new MapBoard();
+    Player player = new Player("Arnold", 1000, 100, 100, 50, "A1");
 
     public void execute() {
         welcome();
@@ -50,6 +56,8 @@ public class GameBoard {
 
     private void showBoard() {
         System.out.println("board right here");
+        getDescriptionPrompt();
+        getDirectionPrompt();
 
     }
 
@@ -102,8 +110,51 @@ public class GameBoard {
         if (choiceInput.equals("help")) {
             showInstructions();
         }
+    }
+    private void getDescriptionPrompt() {
 
+    }
 
+    private void getDirectionPrompt() {
+        try {
+            StringBuilder directionsStr = new StringBuilder();
+            List<Direction> allDirections =  mapBoard.getAllDirections();
+            Map<String, String> directionsHM = new HashMap<>();
+
+            for (Direction dir: allDirections){
+                directionsHM.put(dir.getDirectionName().toLowerCase(), dir.getPlace());
+
+                directionsStr.append("Go ");
+                directionsStr.append(dir.getDirectionName());
+                directionsStr.append(" \n");
+            }
+
+            String directionPrompt = "What is going to be your next destination? \n" +directionsStr.toString()+ ">";
+            String directionOptions = convertToPromptOption(allDirections);
+            String directionErrMsg = "Invalid input!(Case Sensitive)";
+
+            System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
+            String inputDirection = prompter.prompt(ANSI_YELLOW + directionPrompt,  directionOptions,directionErrMsg + ANSI_RESET);
+            System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
+            inputDirection = inputDirection.toLowerCase().substring(3);
+
+            if (inputDirection != null && inputDirection != ""){
+                player.setCurrentLocation(directionsHM.get(inputDirection));
+            }
+            System.out.println(player.getCurrentLocation());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String convertToPromptOption(List<Direction> allDirections){
+        StringBuilder directionsStr = new StringBuilder();
+        for (Direction dir: allDirections){
+            directionsStr.append("Go ");
+            directionsStr.append(dir.getDirectionName());
+            directionsStr.append("|");
+        }
+        return directionsStr.toString();
     }
 
     private void loadSavedGame() {
