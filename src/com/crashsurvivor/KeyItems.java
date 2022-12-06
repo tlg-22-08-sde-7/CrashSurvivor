@@ -1,7 +1,11 @@
 package com.crashsurvivor;
 
 class KeyItems {
-    private String keyItemName;
+    private String keyItems;
+
+    public KeyItems(String keyItems) {
+        this.keyItems = keyItems;
+    }
 
     private void addKeyItem() {
 
@@ -11,4 +15,18 @@ class KeyItems {
 
     }
 
+    public String getKeyItems() {
+        return keyItems;
+    }
+
+    public void setKeyItems(String keyItems) {
+        this.keyItems = keyItems;
+    }
+
+    @Override
+    public String toString() {
+        return "KeyItems{" +
+                "keyItems='" + keyItems + '\'' +
+                '}';
+    }
 }
