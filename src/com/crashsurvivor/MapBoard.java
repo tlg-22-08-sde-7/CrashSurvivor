@@ -15,7 +15,6 @@ public class MapBoard {
 
     File input = new File("CrashSurvivor/resources/location.json");
 
-
     public void printMap() {
         // make path of json into a variable
 
@@ -31,12 +30,12 @@ public class MapBoard {
             allLocationsList(jsonArrayOfLocations, locations);
 
             // Create sublists for the List<Locations>
-            List<Location> A = locations.subList(0,7);
-            List<Location> B = locations.subList(7,14);
-            List<Location> C = locations.subList(14,21);
-            List<Location> D = locations.subList(21,28);
-            List<Location> E = locations.subList(28,35);
-            List<Location> F = locations.subList(35,42);
+            List<Location> A = locations.subList(0, 7);
+            List<Location> B = locations.subList(7, 14);
+            List<Location> C = locations.subList(14, 21);
+            List<Location> D = locations.subList(21, 28);
+            List<Location> E = locations.subList(28, 35);
+            List<Location> F = locations.subList(35, 42);
 
             // Create layout of the MapBoard, removing unnecessary items from Array
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -148,7 +147,7 @@ public class MapBoard {
     }
 
     // get all directions
-    public List<Direction> getAllDirections() throws FileNotFoundException{
+    public List<Direction> getAllDirections() throws FileNotFoundException {
         List<Direction> directions = new ArrayList<>();
 
         JsonElement fileElement = JsonParser.parseReader(new FileReader(input));
@@ -174,60 +173,28 @@ public class MapBoard {
         return directions;
     }
 
-    public String printPlayerData() throws FileNotFoundException {
+    public Player printPlayerData() throws FileNotFoundException {
+        Player player = null;
         System.out.println("Choose from the following characters (" +
                 "Arnold, Jennifer, Jason, or Scarlett):\n");
+        List<Player> allPlayers = getAllPlayerData();
+        printPlayersInfo(allPlayers);
 
-        arnoldData();
-        jenniferData();
-        jasonData();
-        scarlettData();
-        String valueInput = prompter.prompt("Type your choice> ", "(?i)arnold|jennifer|jason|scarlett",
+        String valueInput = prompter.prompt("Type your choice> ", getPlayersName(allPlayers),
                 "Please select a valid character!");
         chosenPlayer = valueInput.toLowerCase();
 
-        return chosenPlayer;
-    }
-    private void currentPlayerData() throws FileNotFoundException {
-
-        if ("arnold".equals(chosenPlayer)) {
-            arnoldData();
-
-        } else if ("jennifer".equals(chosenPlayer)) {
-            jenniferData();
-
-        } else if ("jason".equals(chosenPlayer)) {
-            jasonData();
-
-        } else if ("scarlett".equals(chosenPlayer)){
-            scarlettData();
-        } else {
-            printPlayerData();
+        for (Player p : allPlayers) {
+            if (p.getName().toLowerCase().equalsIgnoreCase(chosenPlayer)) {
+                player = p;
+                break;
+            }
         }
+
+        return player;
     }
 
-
-    private void scarlettData() throws FileNotFoundException {
-        List<Player> data = getPlayerData();
-        scarlett(data);
-    }
-
-    private void jasonData() throws FileNotFoundException {
-        List<Player> data = getPlayerData();
-        jason(data);
-    }
-
-    private void jenniferData() throws FileNotFoundException {
-        List<Player> data = getPlayerData();
-        jennifer(data);
-    }
-
-    private void arnoldData() throws FileNotFoundException {
-        List<Player> data = getPlayerData();
-        arnold(data);
-    }
-
-    private List<Player> getPlayerData() throws FileNotFoundException {
+    private List<Player> getAllPlayerData() throws FileNotFoundException {
         JsonElement fileElement = JsonParser.parseReader(new FileReader(input));
         JsonObject fileObject = fileElement.getAsJsonObject();
         JsonArray jsonArrayOfPlayers = fileObject.get("players").getAsJsonArray();
@@ -237,36 +204,24 @@ public class MapBoard {
         return data;
     }
 
-    private void scarlett(List<Player> data) {
-        List<Player> scarlett = data.subList(3,4);
-        System.out.println(scarlett.toString()
-                .replace(",", "")
-                .replace("[", "")
-                .replace("]", ""));
+    private void printPlayersInfo(List<Player> data) {
+        for (Player player : data) {
+            System.out.println(player.toString());
+        }
     }
 
-    private void jason(List<Player> data) {
-        List<Player> jason = data.subList(2,3);
-        System.out.println(jason.toString()
-                .replace(",", "")
-                .replace("[", "")
-                .replace("]", ""));
+    public void printPlayerInfo(Player player) {
+        System.out.println(player.toString());
     }
 
-    private void jennifer(List<Player> data) {
-        List<Player> jennifer = data.subList(1,2);
-        System.out.println(jennifer.toString()
-                .replace(",", "")
-                .replace("[", "")
-                .replace("]", ""));
-    }
-
-    private void arnold(List<Player> data) {
-        List<Player> arnold = data.subList(0,1);
-        System.out.println(arnold.toString()
-                .replace(",", "")
-                .replace("[", "")
-                .replace("]", ""));
+    private String getPlayersName(List<Player> allPlayers) {
+        StringBuilder sb = new StringBuilder();
+        //display all Players' Info
+        for (Player player : allPlayers) {
+            sb.append(player.getName());
+            sb.append("|");
+        }
+        return sb.toString();
     }
 
     private void allPlayersList(JsonArray jsonArrayOfPlayers, List<Player> data) {
@@ -280,7 +235,6 @@ public class MapBoard {
             JsonElement speed = playerJsonObject.get("speed");
             String currentLocation = playerJsonObject.get("currentLocation").getAsString();
 
-
             Player player = new Player(name, health.getAsInt(), hydration.getAsInt(),
                     strength.getAsInt(), speed.getAsInt(), currentLocation);
 
@@ -288,8 +242,9 @@ public class MapBoard {
 
         }
     }
+
     // show all of the items at location
-    private void showItemsAtLocation() throws FileNotFoundException {
+    public void showItemsAtLocation() throws FileNotFoundException {
         List<Items> items = new ArrayList<>();
         JsonElement fileElement = JsonParser.parseReader(new FileReader(input));
         JsonObject fileObject = fileElement.getAsJsonObject();
@@ -320,8 +275,12 @@ public class MapBoard {
             }
         }
     }
+
+
+   
     // show key items at the locations
     private void showKeyItemsAtLocation() throws FileNotFoundException{
+
         List<KeyItems> keyItems = new ArrayList<>();
         JsonElement fileElement = JsonParser.parseReader(new FileReader(input));
         JsonObject fileObject = fileElement.getAsJsonObject();
@@ -408,17 +367,6 @@ public class MapBoard {
         }
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
-
-        MapBoard map = new MapBoard();
-        map.printPlayerData();
-        map.printMap();
-        map.printDescriptionData();
-        map.showKeyItemsAtLocation();
-        map.showItemsAtLocation();
-        map.showWildlifeAtLocation();
-        map.currentPlayerData();
-    }
 }
 
 
