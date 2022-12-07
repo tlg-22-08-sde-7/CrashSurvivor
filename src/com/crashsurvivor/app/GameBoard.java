@@ -159,6 +159,7 @@ public class GameBoard {
                 mapBoard.printDescriptionData();
 
                 getItemsPrompt();
+                mapBoard.showWildlifeAtLocation();
                 mapBoard.printPlayerInfo(player);
                 //
                 getDirectionPrompt();
