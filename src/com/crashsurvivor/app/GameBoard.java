@@ -21,7 +21,7 @@ public class GameBoard {
     private Prompter prompter;
 
     MapBoard mapBoard = new MapBoard();
-    Player player = new Player("Arnold", 1000, 100, 100, 50, "A1");
+    Player player;
 
     public void execute() {
         clearConsole();
@@ -70,7 +70,6 @@ public class GameBoard {
     private void showBoard() {
         System.out.println("board right here");
         clearConsole();
-        getDirectionPrompt();
     }
 
     private void promptStartGame() {
@@ -107,23 +106,26 @@ public class GameBoard {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String choiceInput = prompter.prompt("Please choose starting item\n>", "flare|flint|pocket knife|quit|help", "Please choose something to survive with!");
-        choiceInput.toLowerCase();
-        if (choiceInput.equals("flare")) {
-            showBoard();
+        pressToContinue();
+        clearConsole();
+        try {
+           player = mapBoard.printPlayerData();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        if (choiceInput.equals("flint")) {
-            showBoard();
+        clearConsole();
+        mapBoard.printMap();
+        mapBoard.printDescriptionData();
+        try {
+            mapBoard.showKeyItemsAtLocation();
+            mapBoard.showItemsAtLocation();
+            mapBoard.printPlayerInfo(player);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        if(choiceInput.equals("pocket knife")){
-            showBoard();
-        }
-        if (choiceInput.equals("quit")) {
-            quitGame(2);
-        }
-        if (choiceInput.equals("help")) {
-            showInstructions();
-        }
+        getDirectionPrompt();
     }
 
     private void getDirectionPrompt() {
@@ -151,11 +153,26 @@ public class GameBoard {
 
             if (inputDirection != null && inputDirection != ""){
                 player.setCurrentLocation(directionsHM.get(inputDirection));
+                clearConsole();
+                System.out.println("Your current location: " + player.getCurrentLocation());
+                mapBoard.printMap();
+                mapBoard.printDescriptionData();
+
+                getItemsPrompt();
+                mapBoard.printPlayerInfo(player);
+                //
+                getDirectionPrompt();
+                clearConsole();
             }
-            System.out.println(player.getCurrentLocation());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void getItemsPrompt() throws FileNotFoundException {
+        //if items in this locations, allow player to pick
+        mapBoard.showKeyItemsAtLocation();
+        mapBoard.showItemsAtLocation();
     }
 
     private String convertToPromptOption(List<Direction> allDirections){
