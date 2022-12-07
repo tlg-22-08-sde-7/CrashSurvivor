@@ -25,8 +25,6 @@ class KeyItems {
 
     @Override
     public String toString() {
-        return "KeyItems{" +
-                "keyItems='" + keyItems + '\'' +
-                '}';
+        return "Key Item: " + keyItems;
     }
 }

@@ -81,6 +81,7 @@
       "description": "You are at the sight of the plane crash. You see a wall of jungle to the North and West.",
       "items" : [],
       "keyItems": ["flare", "flint", "pocket knife"],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -100,9 +101,12 @@
           "name": "water",
           "health" : 0,
           "hydration": 30,
-          "strength": 0
+          "strength": 0,
+          "speed": 0
         }
       ],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -122,6 +126,8 @@
       "name": "A2",
       "description": "You see a wall of jungle to the North.",
       "items": [],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -145,9 +151,12 @@
           "name": "spear",
           "health" : 0,
           "hydration": 30,
-          "strength": 50
+          "strength": 50,
+          "speed": 0
         }
       ],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -171,9 +180,12 @@
           "name": "water",
           "health": 0,
           "hydration": 30,
-          "strength": 0
+          "strength": 0,
+          "speed": 0
         }
       ],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -193,6 +205,7 @@
       "name": "A5",
       "description": "You see a wall of jungle to the North.",
       "items": [],
+      "keyItems": [],
       "wildlifeInLocation": [
         "Monkey"
       ],
@@ -215,7 +228,8 @@
       "name": "A6",
       "description": "You see a wall of jungle to the North and East.",
       "items": [],
-      "keyItems": "hammer",
+      "keyItems": ["hammer"],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "West",
@@ -231,6 +245,7 @@
       "name": "B0",
       "description": "You see a wall of jungle to the West.",
       "items": [],
+      "keyItems": [],
       "wildlifeInLocation": [
         "Crocodile"
       ],
@@ -257,9 +272,12 @@
           "name": "banana",
           "health": 300,
           "hydration": 0,
-          "strength": 0
+          "strength": 0,
+          "speed": 0
         }
       ],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -287,9 +305,12 @@
           "name": "water",
           "health": 0,
           "hydration": 30,
-          "strength": 0
+          "strength": 0,
+          "speed": 0
         }
       ],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -313,6 +334,8 @@
       "name": "B3",
       "description": "",
       "items": [],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -336,7 +359,8 @@
       "name": "B4",
       "description": "",
       "items": [],
-      "keyItems": "wood",
+      "keyItems": ["wood"],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -360,6 +384,7 @@
       "name": "B5",
       "description": "",
       "items": [],
+      "keyItems": [],
       "wildlifeInLocation": [
         "Wild Boar"
       ],
@@ -386,6 +411,8 @@
       "name": "B6",
       "description": "You see a wall of jungle to the East.",
       "items": [],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "South",
@@ -405,6 +432,8 @@
       "name": "C0",
       "description": "You see a wall of jungle to the West.",
       "items": [],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -424,7 +453,8 @@
       "name": "C1",
       "description": "",
       "items": [],
-      "keyItems": "boat ore",
+      "keyItems": ["boat ore"],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -448,6 +478,7 @@
       "name": "C2",
       "description": "",
       "items": [],
+      "keyItems": [],
       "wildlifeInLocation": [
         "Rhino"
       ],
@@ -474,6 +505,8 @@
       "name": "C3",
       "description": "",
       "items": [],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -496,7 +529,17 @@
     {
       "name": "C4",
       "description": "",
-      "items": [],
+      "items": [
+        {
+          "name": "machete",
+          "health": 0,
+          "hydration": 0,
+          "strength": 30,
+          "speed": 0
+        }
+      ],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -520,6 +563,8 @@
       "name": "C5",
       "description": "",
       "items": [],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -543,6 +588,7 @@
       "name": "C6",
       "description": "You see a wall of jungle to the East.",
       "items": [],
+      "keyItems": [],
       "wildlifeInLocation": [
         "Monkey"
       ],
@@ -565,7 +611,8 @@
       "name": "D0",
       "description": "You see a wall of jungle to the West.",
       "items": [],
-      "keyItems": "nails",
+      "keyItems": ["nails"],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -585,6 +632,7 @@
       "name": "D1",
       "description": "",
       "items": [],
+      "keyItems": [],
       "wildlifeInLocation": [
         "Bat"
       ],
@@ -613,13 +661,14 @@
       "items": [
         {
           "name": "water",
-          "hydration": 30
-        },
-        {
-          "name": "machete",
-          "strength": 30
+          "health": 0,
+          "hydration": 30,
+          "strength": 0,
+          "speed": 0
         }
       ],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -642,7 +691,17 @@
     {
       "name": "D3",
       "description": "",
-      "items": [],
+      "items": [
+        {
+          "name": "apple",
+          "health": 200,
+          "hydration": 0,
+          "strength": 0,
+          "speed": 0
+        }
+      ],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -666,6 +725,7 @@
       "name": "D4",
       "description": "",
       "items": [],
+      "keyItems": [],
       "wildlifeInLocation": [
         "Snake"
       ],
@@ -692,7 +752,8 @@
       "name": "D5",
       "description": "",
       "items": [],
-      "keyItems": "sealant",
+      "keyItems": ["sealant"],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -718,13 +779,14 @@
       "items": [
         {
           "name": "water",
-          "hydration": 30
-        },
-        {
-          "name": "apple",
-          "health": 200
+          "health": 0,
+          "hydration": 30,
+          "strength": 0,
+          "speed": 0
         }
       ],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "South",
@@ -744,6 +806,8 @@
       "name": "E0",
       "description": "You see a wall of jungle to the West.",
       "items": [],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -762,7 +826,17 @@
     {
       "name": "E1",
       "description": "",
-      "items": [],
+      "items": [
+        {
+          "name": "banana",
+          "health": 300,
+          "hydration": 0,
+          "strength": 0,
+          "speed": 0
+        }
+      ],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -786,7 +860,8 @@
       "name": "E2",
       "description": "",
       "items": [],
-      "keyItems": "wood",
+      "keyItems": ["wood"],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -812,10 +887,14 @@
       "items": [
         {
           "name": "coconut",
+          "health": 100,
           "hydration": 30,
-          "health": 100
+          "strength": 0,
+          "speed": 0
         }
       ],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -839,6 +918,8 @@
       "name": "E4",
       "description": "",
       "items": [],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -862,7 +943,8 @@
       "name": "E5",
       "description": "",
       "items": [],
-      "keyItems": "flashlight",
+      "keyItems": ["flashlight"],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -886,6 +968,8 @@
       "name": "E6",
       "description": "You see a wall of jungle to the East.",
       "items": [],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "South",
@@ -907,13 +991,14 @@
       "items": [
         {
           "name": "water",
-          "hydration": 30
-        },
-        {
-          "name": "banana",
-          "health": 300
+          "health": 0,
+          "hydration": 30,
+          "strength": 0,
+          "speed": 0
         }
       ],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -929,9 +1014,8 @@
       "name": "F1",
       "description": "You see a wall of jungle to the South.",
       "items": [],
-      "wildlifeInLocation": [
-        "Wild Boar"
-      ],
+      "keyItems": [],
+      "wildlifeInLocation": ["Wild Boar"],
       "directions": [
         {
           "directionName": "East",
@@ -953,9 +1037,14 @@
       "items": [
         {
           "name": "apple",
-          "health": 200
+          "health": 200,
+          "hydration": 0,
+          "strength": 0,
+          "speed": 0
         }
       ],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -977,9 +1066,14 @@
       "items": [
         {
           "name": "water",
-          "hydration": 30
+          "health": 0,
+          "hydration": 30,
+          "strength": 0,
+          "speed": 0
         }
       ],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -998,7 +1092,17 @@
     {
       "name": "F4",
       "description": "You see a wall of jungle to the South.",
-      "items": [],
+      "items": [
+        {
+          "name": "running shoes",
+          "health": 0,
+          "hydration": 0,
+          "strength": 0,
+          "speed": 50
+        }
+      ],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -1018,7 +1122,8 @@
       "name": "F5",
       "description": "You see a wall of jungle to the South.",
       "items": [],
-      "keyItems": "boat motor",
+      "keyItems": ["boat motor"],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "East",
@@ -1040,13 +1145,14 @@
       "items": [
         {
           "name": "water",
-          "hydration": 30
-        },
-        {
-          "name": "running shoes",
-          "speed": 50
+          "health": 0,
+          "hydration": 30,
+          "strength": 0,
+          "speed": 0
         }
       ],
+      "keyItems": [],
+      "wildlifeInLocation": [],
       "directions": [
         {
           "directionName": "North",

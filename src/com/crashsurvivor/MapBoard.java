@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class MapBoard {
     private Prompter prompter = new Prompter(new Scanner(System.in));
-    private String ignoredExtraValueInput;
+    private String chosenPlayer;
 
     File input = new File("CrashSurvivor/resources/location.json");
 
@@ -184,22 +184,22 @@ public class MapBoard {
         scarlettData();
         String valueInput = prompter.prompt("Type your choice> ", "(?i)arnold|jennifer|jason|scarlett",
                 "Please select a valid character!");
-        ignoredExtraValueInput = valueInput.toLowerCase();
+        chosenPlayer = valueInput.toLowerCase();
 
-        return ignoredExtraValueInput;
+        return chosenPlayer;
     }
     private void currentPlayerData() throws FileNotFoundException {
 
-        if ("arnold".equals(ignoredExtraValueInput)) {
+        if ("arnold".equals(chosenPlayer)) {
             arnoldData();
 
-        } else if ("jennifer".equals(ignoredExtraValueInput)) {
+        } else if ("jennifer".equals(chosenPlayer)) {
             jenniferData();
 
-        } else if ("jason".equals(ignoredExtraValueInput)) {
+        } else if ("jason".equals(chosenPlayer)) {
             jasonData();
 
-        } else if ("scarlett".equals(ignoredExtraValueInput)){
+        } else if ("scarlett".equals(chosenPlayer)){
             scarlettData();
         } else {
             printPlayerData();
@@ -307,11 +307,37 @@ public class MapBoard {
                     String itemName = itemJsonObject.get("name").getAsString();
                     JsonElement hydration = itemJsonObject.get("hydration");
                     JsonElement health = itemJsonObject.get("health");
-                    Items itemsAtLocation = new Items(itemName, hydration.getAsInt(), health.getAsInt());
+                    JsonElement strength = itemJsonObject.get("strength");
+                    JsonElement speed = itemJsonObject.get("speed");
+                    Items itemsAtLocation = new Items(itemName, hydration.getAsInt(),
+                            health.getAsInt(), strength.getAsInt(), speed.getAsInt());
                     items.add(itemsAtLocation);
 
                 }
-                System.out.println(items);
+                System.out.println(items.toString()
+                        .replace("[", "")
+                        .replace("]", ""));
+            }
+        }
+    }
+    private void showKeyItemsAtLocation() throws FileNotFoundException{
+        List<KeyItems> keyItems = new ArrayList<>();
+        JsonElement fileElement = JsonParser.parseReader(new FileReader(input));
+        JsonObject fileObject = fileElement.getAsJsonObject();
+
+        JsonArray jsonArrayOfLocations = fileObject.get("locations").getAsJsonArray();
+        for (JsonElement jsonLocationElement : jsonArrayOfLocations) {
+            JsonObject jsonObjectOfLocations = jsonLocationElement.getAsJsonObject();
+            String name = jsonObjectOfLocations.get("name").getAsString();
+            if (Objects.equals(Player.getCurrentLocation(), name)) {
+                JsonArray jsonArrayOfKeyItems = jsonObjectOfLocations.get("keyItems").getAsJsonArray();
+                String keyItemName = jsonArrayOfKeyItems.toString();
+                KeyItems keyItemsAtLocation = new KeyItems(keyItemName);
+                keyItems.add(keyItemsAtLocation);
+
+                System.out.println(keyItems.toString()
+                        .replace("[", "")
+                        .replace("]", ""));
             }
         }
     }
@@ -319,14 +345,12 @@ public class MapBoard {
     public static void main(String[] args) throws FileNotFoundException {
 
         MapBoard map = new MapBoard();
-        String playerInfo = map.printPlayerData();
+        map.printPlayerData();
         map.printMap();
         map.printDescriptionData();
-        map.currentPlayerData();
+        map.showKeyItemsAtLocation();
         map.showItemsAtLocation();
-
-
-
+        map.currentPlayerData();
     }
 }
 

@@ -6,19 +6,15 @@ class Items {
     private String name;
     private int hydration;
     private int health;
+    private int strength;
+    private int speed;
 
-    public Items(String name, int hydration, int health) {
+    public Items(String name, int hydration, int health, int strength, int speed) {
         this.name = name;
         this.hydration = hydration;
         this.health = health;
-    }
-    public Items(int health, String name) {
-        this.name = name;
-        this.health = health;
-    }
-    public Items(String name, int hydration) {
-        this.name = name;
-        this.hydration = hydration;
+        this.strength = strength;
+        this.speed = speed;
     }
 
     private void addItem() {
@@ -53,12 +49,26 @@ class Items {
         this.health = health;
     }
 
+    public int getStrength() {
+        return strength;
+    }
+
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
     @Override
     public String toString() {
-        return "Items{" +
-                "name='" + name + '\'' +
-                ", hydration=" + hydration +
-                ", health=" + health +
-                '}';
+        return "Item: " +
+                getName() + " | HP = " + getHealth() + " | H2O = " + getHydration() + " | STR = " +
+                getStrength() + " | SP = " + getSpeed();
     }
 }
