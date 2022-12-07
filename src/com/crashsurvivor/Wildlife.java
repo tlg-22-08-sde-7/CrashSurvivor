@@ -52,4 +52,10 @@ class Wildlife {
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+
+    @Override
+    public String toString() {
+        return "Wildlife = " + getName() + " | health = " + getHealth() + " | strength = " +
+                getStrength() + " | speed = " + getSpeed();
+    }
 }
