@@ -279,7 +279,7 @@ public class MapBoard {
 
    
     // show key items at the locations
-    private void showKeyItemsAtLocation() throws FileNotFoundException{
+    public void showKeyItemsAtLocation() throws FileNotFoundException{
 
         List<KeyItems> keyItems = new ArrayList<>();
         JsonElement fileElement = JsonParser.parseReader(new FileReader(input));
@@ -302,7 +302,7 @@ public class MapBoard {
         }
     }
     // show wildlife at the locations
-    private void showWildlifeAtLocation() throws FileNotFoundException {
+    public void showWildlifeAtLocation() throws FileNotFoundException {
         List<Wildlife> wildlife = new ArrayList<>();
         JsonElement fileElement = JsonParser.parseReader(new FileReader(input));
         JsonObject fileObject = fileElement.getAsJsonObject();
@@ -337,26 +337,38 @@ public class MapBoard {
                 List<Wildlife> rhino = wildlife.subList(4,5);
                 List<Wildlife> crocodile = wildlife.subList(5,6);
                 if (wildlifeAtLocation.equals("Monkey")) {
+                    String monkeyPicture = "CrashSurvivor/resources/monkey.txt";
+                    displayWildlife(monkeyPicture);
                     System.out.println(monkey.toString()
                             .replace("[", "")
                             .replace("]", ""));
                 } else if (wildlifeAtLocation.equals("Wild Boar")) {
+                    String wildBoarPicture = "CrashSurvivor/resources/wildboar.txt";
+                    displayWildlife(wildBoarPicture);
                     System.out.println(wildBoar.toString()
                             .replace("[", "")
                             .replace("]", ""));
                 } else if (wildlifeAtLocation.equals("Bat")) {
+                    String batPicture = "CrashSurvivor/resources/bat.txt";
+                    displayWildlife(batPicture);
                     System.out.println(bat.toString()
                             .replace("[", "")
                             .replace("]", ""));
                 } else if (wildlifeAtLocation.equals("Snake")) {
+                    String snakePicture = "CrashSurvivor/resources/snake.txt";
+                    displayWildlife(snakePicture);
                     System.out.println(snake.toString()
                             .replace("[", "")
                             .replace("]", ""));
                 } else if (wildlifeAtLocation.equals("Rhino")) {
+                    String rhinoPicture = "CrashSurvivor/resources/rhino.txt";
+                    displayWildlife(rhinoPicture);
                     System.out.println(rhino.toString()
                             .replace("[", "")
                             .replace("]", ""));
                 } else if (wildlifeAtLocation.equals("Crocodile")) {
+                    String crocodilePicture = "CrashSurvivor/resources/crocodile.txt";
+                    displayWildlife(crocodilePicture);
                     System.out.println(crocodile.toString()
                             .replace("[", "")
                             .replace("]", ""));
@@ -366,7 +378,16 @@ public class MapBoard {
             }
         }
     }
-
+    private void displayWildlife(String file) {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line1;
+            while ((line1 = br.readLine()) != null) {
+                System.out.println(line1);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
 
