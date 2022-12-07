@@ -17,6 +17,9 @@ class Items {
         this.speed = speed;
     }
 
+    public Items(String itemName) {
+    }
+
     private void addItem() {
 
     }

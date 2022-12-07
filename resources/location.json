@@ -1,5 +1,18 @@
 
 {
+  "inventory": [
+  {
+    "items": [{
+      "name" : "boat"
+    }]
+  },
+  {
+    "keyItems": [
+      {
+        "name": "boat"
+      }]
+  }
+],
   "players": [
     {
       "name": "Arnold",

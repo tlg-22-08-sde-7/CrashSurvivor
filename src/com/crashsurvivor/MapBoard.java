@@ -276,8 +276,67 @@ public class MapBoard {
         }
     }
 
+    // get inventory items and key items from json file location.json and display items in inventory
+    public void showInventory() throws FileNotFoundException {
+        List<Items> inventoryItems = new ArrayList<>();
+        List<Items> keyItems = new ArrayList<>();
+        try {
+            JsonElement fileElement = JsonParser.parseReader(new FileReader(input));
+            JsonObject fileObject = fileElement.getAsJsonObject();
+            JsonArray jsonArrayOfLocations = fileObject.get("locations").getAsJsonArray();
 
-   
+            for (JsonElement locationElement : jsonArrayOfLocations) {
+                JsonObject locationJsonObject = locationElement.getAsJsonObject();
+                String name = locationJsonObject.get("name").getAsString();
+                JsonArray jsonArrayOfItems = locationJsonObject.get("items").getAsJsonArray();
+
+                if (Objects.equals(Player.getCurrentLocation(), name)) {
+                    for (JsonElement itemElement : jsonArrayOfItems) {
+                        JsonObject itemJsonObject = itemElement.getAsJsonObject();
+                        String itemName = itemJsonObject.get("name").getAsString();
+                        Items itemsAtLocation = new Items(itemName);
+                        inventoryItems.add(itemsAtLocation);
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            JsonElement fileElement = JsonParser.parseReader(new FileReader(input));
+            JsonObject fileObject = fileElement.getAsJsonObject();
+            JsonArray jsonArrayOfLocations = fileObject.get("locations").getAsJsonArray();
+
+            for (JsonElement locationElement : jsonArrayOfLocations) {
+                JsonObject locationJsonObject = locationElement.getAsJsonObject();
+                String name = locationJsonObject.get("name").getAsString();
+                JsonArray jsonArrayOfItems = locationJsonObject.get("keyItems").getAsJsonArray();
+
+                if (Objects.equals(Player.getCurrentLocation(), name)) {
+                    for (JsonElement itemElement : jsonArrayOfItems) {
+                        JsonObject itemJsonObject = itemElement.getAsJsonObject();
+                        String itemName = itemJsonObject.get("name").getAsString();
+                        Items itemsAtLocation = new Items(itemName);
+                        keyItems.add(itemsAtLocation);
+                    }
+                }
+            }
+
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    }
+        System.out.println("Inventory: " + inventoryItems.toString()
+                .replace("[", "")
+                .replace("]", ""));
+        System.out.println("Key Items: " + keyItems.toString()
+                .replace("[", "")
+                .replace("]", ""));
+    }
+
+
+
+
     // show key items at the locations
     public void showKeyItemsAtLocation() throws FileNotFoundException{
 
