@@ -1,8 +1,10 @@
 package com.crashsurvivor;
 
 import com.apps.util.Prompter;
+import com.crashsurvivor.app.GameBoard;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Player {
@@ -16,6 +18,10 @@ public class Player {
     private Prompter prompter;
     private Wildlife wildlife;
     private MapBoard map;
+    private GameBoard gameBoard;
+    private Items weapons;
+    private Inventory inventory;
+
 
     public Player(String name, int health, int hydration, int strength, int speed, String currentLocation) {
         setSpeed(speed);
@@ -32,29 +38,47 @@ public class Player {
 
     }
 
-    private void attack() {
-
+    private void attack(Wildlife wildlife, Player player) {
+        int newWildlifeHealth = wildlife.getHealth() - player.getStrength();
+        wildlife.setHealth(newWildlifeHealth);
+        System.out.println(wildlife.getHealth());
     }
-    private void wildlifePrompt() throws FileNotFoundException {
-        prompter = new Prompter(new Scanner(System.in));
-        String choice = prompter.prompt("Do you wish to attack, flee, or use item?",
-                "attack|flee|use item", "Invalid Choice, choose a valid choice!");
-        choice.toLowerCase();
-        if (choice.equals("attack")) {
-            attack();
-        } else if (choice.equals("flee")) {
-            flee();
-        } else if (choice.equals("use item")) {
-            String useItem = prompter.prompt("Do you wish to eat or drink?", "eat|drink",
-                    "Invalid choice. Please choose a valid choice!");
-            useItem.toLowerCase();
-            if (useItem.equals("eat")) {
-                eat();
-                wildlifePrompt();
-            } else if (useItem.equals("drink")) {
-                drink();
-                wildlifePrompt();
+    public void wildlifePrompt(Wildlife wildlife, Player player) throws FileNotFoundException {
+        int wildlifeHealth = wildlife.getHealth();
+        if (wildlifeHealth >= 1 && getHealth() >= 1) {
+            prompter = new Prompter(new Scanner(System.in));
+            String choice = prompter.prompt("Do you wish to attack, flee, or use item?",
+                    "attack|flee|use item", "Invalid Choice, choose a valid choice!");
+            choice.toLowerCase();
+            if (choice.equals("attack")) {
+                attack(wildlife, player);
+                wildlife.attack(wildlife, player);
+                map.showWildlifeAtLocation();
+                map.printPlayerInfo(Player.this);
+                wildlifePrompt(wildlife, player);
+            } else if (choice.equals("flee")) {
+                flee();
+            } else if (choice.equals("use item")) {
+                String useItem = prompter.prompt("Do you wish to eat or drink?", "eat|drink",
+                        "Invalid choice. Please choose a valid choice!");
+                useItem.toLowerCase();
+                if (useItem.equals("eat")) {
+                    eat();
+                    map.showWildlifeAtLocation();
+                    map.printPlayerInfo(player);
+                    wildlifePrompt(wildlife, player);
+                } else if (useItem.equals("drink")) {
+                    drink();
+                    map.showWildlifeAtLocation();
+                    map.printPlayerInfo(player);
+                    wildlifePrompt(wildlife, player);
+                }
             }
+        } else if (wildlife.getHealth() < 1) {
+            gameBoard.getDirectionPrompt();
+
+        } else if (getHealth() < 1) {
+            gameBoard.gameOver();
         }
     }
 

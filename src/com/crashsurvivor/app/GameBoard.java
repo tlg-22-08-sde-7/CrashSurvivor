@@ -121,6 +121,10 @@ public class GameBoard {
             mapBoard.showKeyItemsAtLocation();
             mapBoard.showItemsAtLocation();
             mapBoard.printPlayerInfo(player);
+            if (mapBoard.showWildlifeAtLocation().length() > 1) {
+                mapBoard.showWildlifeAtLocation();
+            }
+
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -128,7 +132,7 @@ public class GameBoard {
         getDirectionPrompt();
     }
 
-    private void getDirectionPrompt() {
+    public void getDirectionPrompt() {
         try {
             StringBuilder directionsStr = new StringBuilder();
             List<Direction> allDirections =  mapBoard.getAllDirections();
@@ -248,5 +252,8 @@ public class GameBoard {
                default:
            }
         }
+    }
+    public void gameOver() {
+
     }
 }

@@ -5,6 +5,8 @@ class Wildlife {
     private int health;
     private int strength;
     private int speed;
+    private Player player;
+    private Items weapons;
 
     public Wildlife(String name, int health, int strength, int speed) {
         setSpeed(speed);
@@ -13,8 +15,10 @@ class Wildlife {
         setStrength(strength);
     }
 
-    private void attack() {
-
+    public void attack(Wildlife wildlife, Player player) {
+        int newPlayerHealth = player.getHealth() - wildlife.getStrength();
+        player.setHealth(newPlayerHealth);
+        System.out.println(player.getHealth());
     }
 
     private void retreat() {
