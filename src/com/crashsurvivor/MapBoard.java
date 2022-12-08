@@ -12,7 +12,8 @@ import java.util.Scanner;
 public class MapBoard {
     private Prompter prompter = new Prompter(new Scanner(System.in));
     private String chosenPlayer;
-    private Wildlife wildlifeAttributes;
+    private Wildlife wildlife;
+    private Player player;
 
     File input = new File("CrashSurvivor/resources/location.json");
 
@@ -215,6 +216,7 @@ public class MapBoard {
         System.out.println(player.toString());
     }
 
+
     private String getPlayersName(List<Player> allPlayers) {
         StringBuilder sb = new StringBuilder();
         //display all Players' Info
@@ -236,7 +238,7 @@ public class MapBoard {
             JsonElement speed = playerJsonObject.get("speed");
             String currentLocation = playerJsonObject.get("currentLocation").getAsString();
 
-            Player player = new Player(name, health.getAsInt(), hydration.getAsInt(),
+            player = new Player(name, health.getAsInt(), hydration.getAsInt(),
                     strength.getAsInt(), speed.getAsInt(), currentLocation);
 
             data.add(player);
@@ -393,7 +395,7 @@ public class MapBoard {
         }
     }
     // show wildlife at the locations
-    public void showWildlifeAtLocation() throws FileNotFoundException {
+    public String showWildlifeAtLocation() throws FileNotFoundException {
         List<Wildlife> wildlife = new ArrayList<>();
         JsonElement fileElement = JsonParser.parseReader(new FileReader(input));
         JsonObject fileObject = fileElement.getAsJsonObject();
@@ -415,9 +417,10 @@ public class MapBoard {
                     JsonElement health = itemJsonObject.get("health");
                     JsonElement strength = itemJsonObject.get("strength");
                     JsonElement speed = itemJsonObject.get("speed");
-                    wildlifeAttributes = new Wildlife(wildlifeName,
+                    this.wildlife = new Wildlife(wildlifeName,
                             health.getAsInt(), strength.getAsInt(), speed.getAsInt());
-                    wildlife.add(wildlifeAttributes);
+                    wildlife.add(this.wildlife);
+
                 }
 
                 List<Wildlife> monkey = wildlife.subList(0, 1);
@@ -432,15 +435,27 @@ public class MapBoard {
                 currentWildlife(wildlifeAtLocation, rhino, "Rhino", "CrashSurvivor/resources/rhino.txt");
                 currentWildlife(wildlifeAtLocation, crocodile, "Crocodile", "CrashSurvivor/resources/crocodile.txt");
                 currentWildlife(wildlifeAtLocation, bat, "Bat", "CrashSurvivor/resources/bat.txt");
+
+                if (wildlifeAtLocation.length() == 0) {
+                    return "";
+                }
             }
         }
+        return "";
     }
-    private void currentWildlife(String wildlifeAtLocation, List<Wildlife> animal, String wildlife, String wildlifeFile) {
+    private void currentWildlife(String wildlifeAtLocation, List<Wildlife> animal, String wildlife, String wildlifeFile) throws FileNotFoundException {
         if (wildlifeAtLocation.equals(wildlife)) {
-            displayWildlife(wildlifeFile);
-            System.out.println(animal.toString()
-                    .replace("[", "")
-                    .replace("]", ""));
+            int wildlifeHealth = animal.get(0).getHealth();
+            int playerHealth = player.getHealth();
+            if (wildlifeHealth >= 1 && playerHealth >= 1) {
+                displayWildlife(wildlifeFile);
+                System.out.println(animal.toString()
+                        .replace("[", "")
+                        .replace("]", ""));
+                printPlayerInfo(this.player);
+                player.wildlifePrompt(this.wildlife, player);
+            }
+
         }
     }
     private void displayWildlife(String file) {
@@ -454,7 +469,7 @@ public class MapBoard {
         }
     }
     private void removeWildlife(List<Wildlife> wildlife) throws FileNotFoundException {
-        if (wildlifeAttributes.getHealth() <= 0) {
+        if (this.wildlife.getHealth() <= 0) {
             showWildlifeAtLocation();
         }
     }
