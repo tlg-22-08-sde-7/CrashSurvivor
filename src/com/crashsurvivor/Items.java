@@ -2,7 +2,7 @@ package com.crashsurvivor;
 
 import java.util.List;
 
-class Items {
+public class Items {
     private String name;
     private int hydration;
     private int health;
