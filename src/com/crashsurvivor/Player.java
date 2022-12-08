@@ -18,9 +18,13 @@ public class Player {
     private Prompter prompter;
     private Wildlife wildlife;
     private MapBoard map;
+
     private GameBoard gameBoard;
     private Items weapons;
     private Inventory inventory;
+
+
+   
 
 
     public Player(String name, int health, int hydration, int strength, int speed, String currentLocation) {
@@ -30,6 +34,7 @@ public class Player {
         setHydration(hydration);
         setStrength(strength);
         setCurrentLocation(currentLocation);
+        inventory = new Inventory();
     }
 
 
@@ -37,6 +42,7 @@ public class Player {
     private void move() {
 
     }
+
 
     private void attack(Wildlife wildlife, Player player) {
         int newWildlifeHealth = wildlife.getHealth() - player.getStrength();
@@ -73,6 +79,7 @@ public class Player {
                     map.printPlayerInfo(player);
                     wildlifePrompt(wildlife, player);
                 }
+
             }
         } else if (wildlife.getHealth() < 1) {
             gameBoard.getDirectionPrompt();
@@ -85,12 +92,14 @@ public class Player {
     private void flee() {
     }
 
-    private void eat() {
-
+    private void eat(String food) {
+        Items foodType = inventory.getItemFromInventory(food);
+        setHealth(foodType.getHealth());
     }
 
-    private void drink() {
-
+    private void drink(String drink) {
+        Items drinkType = inventory.getItemFromInventory(drink);
+        setHydration(drinkType.getHydration());
     }
 
     private void build() {
@@ -157,6 +166,9 @@ public class Player {
         this.currentPlayer = currentPlayer;
     }
 
+    public Inventory getInventory() {
+        return inventory;
+    }
     @Override
     public String toString() {
         return  getName() + " | HP = " + getHealth() + " | hydration = " + getHydration() + " | strength = "
