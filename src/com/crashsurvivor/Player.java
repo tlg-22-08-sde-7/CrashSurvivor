@@ -1,5 +1,10 @@
 package com.crashsurvivor;
 
+import com.apps.util.Prompter;
+
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 public class Player {
     private static String currentLocation = "A1";
     private String name;
@@ -8,6 +13,9 @@ public class Player {
     private int strength;
     private int speed;
     String currentPlayer;
+    private Prompter prompter;
+    private Wildlife wildlife;
+    private MapBoard map;
 
     public Player(String name, int health, int hydration, int strength, int speed, String currentLocation) {
         setSpeed(speed);
@@ -27,6 +35,31 @@ public class Player {
 
     private void attack() {
 
+    }
+    private void wildlifePrompt() throws FileNotFoundException {
+        prompter = new Prompter(new Scanner(System.in));
+        String choice = prompter.prompt("Do you wish to attack, flee, or use item?",
+                "attack|flee|use item", "Invalid Choice, choose a valid choice!");
+        choice.toLowerCase();
+        if (choice.equals("attack")) {
+            attack();
+        } else if (choice.equals("flee")) {
+            flee();
+        } else if (choice.equals("use item")) {
+            String useItem = prompter.prompt("Do you wish to eat or drink?", "eat|drink",
+                    "Invalid choice. Please choose a valid choice!");
+            useItem.toLowerCase();
+            if (useItem.equals("eat")) {
+                eat();
+                wildlifePrompt();
+            } else if (useItem.equals("drink")) {
+                drink();
+                wildlifePrompt();
+            }
+        }
+    }
+
+    private void flee() {
     }
 
     private void eat() {
