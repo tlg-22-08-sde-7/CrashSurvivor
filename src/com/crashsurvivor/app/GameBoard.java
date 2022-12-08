@@ -1,15 +1,14 @@
 package com.crashsurvivor.app;
 
 import com.apps.util.Prompter;
-import com.crashsurvivor.Direction;
-import com.crashsurvivor.MapBoard;
-import com.crashsurvivor.Player;
+import com.crashsurvivor.*;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import java.util.Map;
 
 public class GameBoard {
 
@@ -110,7 +109,6 @@ public class GameBoard {
         clearConsole();
         try {
            player = mapBoard.printPlayerData();
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -119,8 +117,9 @@ public class GameBoard {
         mapBoard.printDescriptionData();
         try {
             mapBoard.showKeyItemsAtLocation();
-            mapBoard.showItemsAtLocation();
             mapBoard.printPlayerInfo(player);
+            mapBoard.showItemsAtLocation();
+            getItemsPrompt();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -139,10 +138,10 @@ public class GameBoard {
 
                 directionsStr.append("Go ");
                 directionsStr.append(dir.getDirectionName());
-                directionsStr.append(" \n");
+                directionsStr.append(" | ");
             }
 
-            String directionPrompt = "Choose your next destination wisely, " + player.getName() + "? \n" +directionsStr.toString()+ ">";
+            String directionPrompt = "Choose your next destination wisely, " + player.getName() + "? \n" +directionsStr.toString()+ "\n>";
             String directionOptions = convertToPromptOption(allDirections);
             String directionErrMsg = "Invalid input!(Case Sensitive)";
 
@@ -158,9 +157,14 @@ public class GameBoard {
                 mapBoard.printMap();
                 mapBoard.printDescriptionData();
 
-                getItemsPrompt();
-                mapBoard.showWildlifeAtLocation();
                 mapBoard.printPlayerInfo(player);
+
+                mapBoard.showItemsAtLocation();
+                getItemsPrompt();
+
+                player.getInventory().showInventory();
+
+                mapBoard.showWildlifeAtLocation();
                 //
                 getDirectionPrompt();
                 clearConsole();
@@ -172,8 +176,20 @@ public class GameBoard {
 
     private void getItemsPrompt() throws FileNotFoundException {
         //if items in this locations, allow player to pick
-        mapBoard.showKeyItemsAtLocation();
-        mapBoard.showItemsAtLocation();
+        List<Items> allItems = mapBoard.getItemsAtLocation(player.getCurrentLocation());
+        if (allItems != null && allItems.size()>0){
+            //get all items in Player's current location
+            String inputDirection = prompter.prompt( "Do you want to pick an item? (Type Get [Item_Name])", convertToPromptOptionItems(allItems) , "Please select from the items available!" );
+            inputDirection = inputDirection.toLowerCase().substring(4);
+
+            for (Items item: allItems){
+                if (item.getName().equalsIgnoreCase(inputDirection)){
+                    player.getInventory().addToInventory(item);
+                    System.out.printf("%s, successfully added to the inventory!\n", item.getName().toUpperCase());
+                }
+                break;
+            }
+        }
     }
 
     private String convertToPromptOption(List<Direction> allDirections){
@@ -184,6 +200,16 @@ public class GameBoard {
             directionsStr.append("|");
         }
         return directionsStr.toString();
+    }
+
+    private String convertToPromptOptionItems( List<Items> allItems){
+        StringBuilder itemsStr = new StringBuilder();
+        for (Items item: allItems){
+            itemsStr.append("Get ");
+            itemsStr.append(item.getName());
+            itemsStr.append("|");
+        }
+        return itemsStr.toString();
     }
 
     private void loadSavedGame() {
