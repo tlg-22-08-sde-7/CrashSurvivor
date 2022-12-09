@@ -392,21 +392,40 @@ public class MapBoard {
                 if (wildlifeList.get(0).getName().equals(wildlifeAtLocation)) {
                     wildlife = wildlifeList.get(0);
                     currentWildlife(wildlifeAtLocation, "Monkey", "CrashSurvivor/resources/monkey.txt", wildlife, player, map, gameBoard);
+                    if (wildlife.getHealth() < 1) {
+                        jsonArrayOfWildlifeInLocation.remove(0);
+                    }
                 } else if (wildlifeList.get(1).getName().equals(wildlifeAtLocation)) {
                     wildlife = wildlifeList.get(1);
                     currentWildlife(wildlifeAtLocation, "Wild Boar", "CrashSurvivor/resources/wildboar.txt", wildlife, player, map, gameBoard);
+                    if (wildlife.getHealth() < 1) {
+                        jsonArrayOfWildlifeInLocation.remove(0);
+                    }
                 } else if (wildlifeList.get(2).getName().equals(wildlifeAtLocation)) {
                     wildlife = wildlifeList.get(2);
                     currentWildlife(wildlifeAtLocation, "Bat", "CrashSurvivor/resources/bat.txt", wildlife, player, map, gameBoard);
+                    if (wildlife.getHealth() < 1) {
+                        jsonArrayOfWildlifeInLocation.remove(0);
+                    }
                 } else if (wildlifeList.get(3).getName().equals(wildlifeAtLocation)) {
                     wildlife = wildlifeList.get(3);
                     currentWildlife(wildlifeAtLocation, "Snake", "CrashSurvivor/resources/snake.txt", wildlife, player, map, gameBoard);
+                    if (wildlife.getHealth() < 1) {
+                        jsonArrayOfWildlifeInLocation.remove(0);
+                    }
                 } else if (wildlifeList.get(4).getName().equals(wildlifeAtLocation)) {
                     wildlife = wildlifeList.get(4);
+                    System.out.println(jsonArrayOfWildlifeInLocation);
                     currentWildlife(wildlifeAtLocation, "Crocodile", "CrashSurvivor/resources/crocodile.txt", wildlife, player, map, gameBoard);
+                    if (wildlife.getHealth() < 1) {
+                        jsonArrayOfWildlifeInLocation.remove(0);
+                    }
                 } else if (wildlifeList.get(5).getName().equals(wildlifeAtLocation)) {
                     wildlife = wildlifeList.get(5);
                     currentWildlife(wildlifeAtLocation, "Rhino", "CrashSurvivor/resources/rhino.txt", wildlife, player, map, gameBoard);
+                    if (wildlife.getHealth() < 1) {
+                        jsonArrayOfWildlifeInLocation.remove(0);
+                    }
                 }
             }
         }
@@ -443,13 +462,38 @@ public class MapBoard {
         }
     }
 
-//    private void removeWildlife(List<Wildlife> wildlife) throws FileNotFoundException {
-//        if (this.wildlife.getHealth() <= 0) {
-//
-//        }
-//    }
+    public void removeWildlife(Wildlife wildlife) throws FileNotFoundException {
+        if (wildlife.getHealth() <= 0) {
+            JsonElement fileElement = JsonParser.parseReader(new FileReader(input));
+            JsonObject fileObject = fileElement.getAsJsonObject();
 
+            JsonArray jsonArrayOfLocations = fileObject.get("locations").getAsJsonArray();
+            for (JsonElement jsonLocationElement : jsonArrayOfLocations) {
+                JsonObject jsonObjectOfWildlife = jsonLocationElement.getAsJsonObject();
+                String name = jsonObjectOfWildlife.get("name").getAsString();
+                JsonArray jsonArrayOfWildlifeInLocation = jsonObjectOfWildlife.get("wildlifeInLocation").getAsJsonArray();
+                String wildlifeAtLocation = jsonArrayOfWildlifeInLocation.toString()
+                        .replace("[", "")
+                        .replace("]", "")
+                        .replace("\"", "");
+                for (JsonElement element : jsonArrayOfWildlifeInLocation) {
+                    String wildlifeString = element.getAsString().replace("\"", "");
+                    if (wildlifeString.equals(wildlife.getName()) && Player.getCurrentLocation().equals(name)) {
+                        char quotes = '"';
+                        wildlifeString = quotes + wildlifeString + quotes;
+                        if (element.toString().equals(wildlifeString)) {
+                            JsonArray jsonArrayOfOneWildlife = jsonObjectOfWildlife.get("wildlifeInLocation").getAsJsonArray();
+                            jsonArrayOfOneWildlife.remove(0);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+ 
 }
+
 
 
 
