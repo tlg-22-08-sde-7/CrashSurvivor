@@ -7,6 +7,6 @@ class Main {
     public static void main(String[] args) {
         Console.clear();
         GameBoard board = new GameBoard();
-        board.execute();
+        board.execute(board);
     }
 }

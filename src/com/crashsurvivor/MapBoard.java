@@ -1,6 +1,7 @@
 package com.crashsurvivor;
 
 import com.apps.util.Prompter;
+import com.crashsurvivor.app.GameBoard;
 import com.google.gson.*;
 
 import java.io.*;
@@ -10,10 +11,9 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class MapBoard {
-    private Prompter prompter = new Prompter(new Scanner(System.in));
-    private String chosenPlayer;
-    private Wildlife wildlife;
-    private Player player;
+    private final Prompter prompter = new Prompter(new Scanner(System.in));
+    Wildlife wildlife;
+    Player player;
 
     File input = new File("CrashSurvivor/resources/location.json");
 
@@ -184,7 +184,7 @@ public class MapBoard {
 
         String valueInput = prompter.prompt("Type your choice> ", getPlayersName(allPlayers),
                 "Please select a valid character!");
-        chosenPlayer = valueInput.toLowerCase();
+        String chosenPlayer = valueInput.toLowerCase();
 
         for (Player p : allPlayers) {
             if (p.getName().toLowerCase().equalsIgnoreCase(chosenPlayer)) {
@@ -206,7 +206,7 @@ public class MapBoard {
         return data;
     }
 
-    private void printPlayersInfo(List<Player> data) {
+    public void printPlayersInfo(List<Player> data) {
         for (Player player : data) {
             System.out.println(player.toString());
         }
@@ -215,9 +215,12 @@ public class MapBoard {
     public void printPlayerInfo(Player player) {
         System.out.println(player.toString());
     }
+    public Player getPlayerInfo(Player player) {
+        return player;
+    }
 
 
-    private String getPlayersName(List<Player> allPlayers) {
+    public String getPlayersName(List<Player> allPlayers) {
         StringBuilder sb = new StringBuilder();
         //display all Players' Info
         for (Player player : allPlayers) {
@@ -238,10 +241,10 @@ public class MapBoard {
             JsonElement speed = playerJsonObject.get("speed");
             String currentLocation = playerJsonObject.get("currentLocation").getAsString();
 
-            player = new Player(name, health.getAsInt(), hydration.getAsInt(),
+            Player player1 = new Player(name, health.getAsInt(), hydration.getAsInt(),
                     strength.getAsInt(), speed.getAsInt(), currentLocation);
 
-            data.add(player);
+            data.add(player1);
 
         }
     }
@@ -395,8 +398,8 @@ public class MapBoard {
         }
     }
     // show wildlife at the locations
-    public String showWildlifeAtLocation() throws FileNotFoundException {
-        List<Wildlife> wildlife = new ArrayList<>();
+    public void showWildlifeAtLocation(Wildlife wildlife, Player player, MapBoard map, GameBoard gameBoard) throws FileNotFoundException {
+        List<Wildlife> wildlifeList = new ArrayList<>();
         JsonElement fileElement = JsonParser.parseReader(new FileReader(input));
         JsonObject fileObject = fileElement.getAsJsonObject();
 
@@ -417,48 +420,51 @@ public class MapBoard {
                     JsonElement health = itemJsonObject.get("health");
                     JsonElement strength = itemJsonObject.get("strength");
                     JsonElement speed = itemJsonObject.get("speed");
-                    this.wildlife = new Wildlife(wildlifeName,
+                    wildlife = new Wildlife(wildlifeName,
                             health.getAsInt(), strength.getAsInt(), speed.getAsInt());
-                    wildlife.add(this.wildlife);
-
+                    wildlifeList.add(wildlife);
                 }
 
-                List<Wildlife> monkey = wildlife.subList(0, 1);
-                List<Wildlife> wildBoar = wildlife.subList(1, 2);
-                List<Wildlife> bat = wildlife.subList(2, 3);
-                List<Wildlife> snake = wildlife.subList(3, 4);
-                List<Wildlife> rhino = wildlife.subList(4, 5);
-                List<Wildlife> crocodile = wildlife.subList(5, 6);
-                currentWildlife(wildlifeAtLocation, monkey, "Monkey", "CrashSurvivor/resources/monkey.txt");
-                currentWildlife(wildlifeAtLocation, wildBoar, "Wild Boar", "CrashSurvivor/resources/wildboar.txt");
-                currentWildlife(wildlifeAtLocation, snake, "Snake", "CrashSurvivor/resources/snake.txt");
-                currentWildlife(wildlifeAtLocation, rhino, "Rhino", "CrashSurvivor/resources/rhino.txt");
-                currentWildlife(wildlifeAtLocation, crocodile, "Crocodile", "CrashSurvivor/resources/crocodile.txt");
-                currentWildlife(wildlifeAtLocation, bat, "Bat", "CrashSurvivor/resources/bat.txt");
-
-                if (wildlifeAtLocation.length() == 0) {
-                    return "";
+                if (wildlifeList.get(0).getName().equals(wildlifeAtLocation)) {
+                    wildlife = wildlifeList.get(0);
+                    currentWildlife(wildlifeAtLocation, "Monkey", "CrashSurvivor/resources/monkey.txt", wildlife, player, map, gameBoard);
+                } else if (wildlifeList.get(1).getName().equals(wildlifeAtLocation)) {
+                    wildlife = wildlifeList.get(1);
+                    currentWildlife(wildlifeAtLocation, "Wild Boar", "CrashSurvivor/resources/wildboar.txt", wildlife, player, map, gameBoard);
+                } else if (wildlifeList.get(2).getName().equals(wildlifeAtLocation)) {
+                    wildlife = wildlifeList.get(2);
+                    currentWildlife(wildlifeAtLocation, "Bat", "CrashSurvivor/resources/bat.txt", wildlife, player, map, gameBoard);
+                } else if (wildlifeList.get(3).getName().equals(wildlifeAtLocation)) {
+                    wildlife = wildlifeList.get(3);
+                    currentWildlife(wildlifeAtLocation, "Snake", "CrashSurvivor/resources/snake.txt", wildlife, player, map, gameBoard);
+                } else if (wildlifeList.get(4).getName().equals(wildlifeAtLocation)) {
+                    wildlife = wildlifeList.get(4);
+                    currentWildlife(wildlifeAtLocation, "Crocodile", "CrashSurvivor/resources/crocodile.txt", wildlife, player, map, gameBoard);
+                } else if (wildlifeList.get(5).getName().equals(wildlifeAtLocation)) {
+                    wildlife = wildlifeList.get(5);
+                    currentWildlife(wildlifeAtLocation, "Rhino", "CrashSurvivor/resources/rhino.txt", wildlife, player, map, gameBoard);
                 }
             }
         }
-        return "";
     }
-    private void currentWildlife(String wildlifeAtLocation, List<Wildlife> animal, String wildlife, String wildlifeFile) throws FileNotFoundException {
-        if (wildlifeAtLocation.equals(wildlife)) {
-            int wildlifeHealth = animal.get(0).getHealth();
-            int playerHealth = player.getHealth();
-            if (wildlifeHealth >= 1 && playerHealth >= 1) {
-                displayWildlife(wildlifeFile);
-                System.out.println(animal.toString()
-                        .replace("[", "")
-                        .replace("]", ""));
-                printPlayerInfo(this.player);
-                player.wildlifePrompt(this.wildlife, player);
-            }
+    private void currentWildlife(String wildlifeAtLocation, String wildlifeName, String wildlifeFile,
+                                 Wildlife wildlife, Player player, MapBoard map, GameBoard gameBoard) throws FileNotFoundException {
+        if (wildlifeAtLocation.equals(wildlife.getName()) && wildlife.getHealth() > 1) {
+            displayWildlife(wildlife, wildlifeFile);
+            printWildlife(wildlife);
+            player.wildlifePrompt(gameBoard, wildlife, player, map, wildlifeFile);
 
         }
     }
-    private void displayWildlife(String file) {
+
+    private void printWildlife(Wildlife wildlife) {
+        System.out.println(wildlife.toString()
+                .replace("[", "")
+                .replace("]", ""));
+    }
+
+    public void displayWildlife(Wildlife wildlife, String file) {
+        printWildlife(wildlife);
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line1;
             while ((line1 = br.readLine()) != null) {
@@ -468,11 +474,11 @@ public class MapBoard {
             e.printStackTrace();
         }
     }
-    private void removeWildlife(List<Wildlife> wildlife) throws FileNotFoundException {
-        if (this.wildlife.getHealth() <= 0) {
-            showWildlifeAtLocation();
-        }
-    }
+//    private void removeWildlife(List<Wildlife> wildlife) throws FileNotFoundException {
+//        if (this.wildlife.getHealth() <= 0) {
+//
+//        }
+//    }
 }
 
 

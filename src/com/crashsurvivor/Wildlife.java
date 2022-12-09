@@ -1,11 +1,10 @@
 package com.crashsurvivor;
 
-class Wildlife {
+public class Wildlife {
     private String name;
     private int health;
     private int strength;
     private int speed;
-    private Player player;
     private Items weapons;
 
     public Wildlife(String name, int health, int strength, int speed) {
@@ -15,10 +14,9 @@ class Wildlife {
         setStrength(strength);
     }
 
-    public void attack(Wildlife wildlife, Player player) {
+    public void wildlifeAttack(Player player, Wildlife wildlife) {
         int newPlayerHealth = player.getHealth() - wildlife.getStrength();
         player.setHealth(newPlayerHealth);
-        System.out.println(player.getHealth());
     }
 
     private void retreat() {
