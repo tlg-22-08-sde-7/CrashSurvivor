@@ -73,16 +73,16 @@
       "health": 300
     },
     {
-      "name": "Rhino",
-      "strength": 90,
-      "speed": 40,
-      "health": 600
-    },
-    {
       "name": "Crocodile",
       "strength": 50,
       "speed": 50,
       "health": 400
+    },
+    {
+      "name": "Rhino",
+      "strength": 90,
+      "speed": 40,
+      "health": 600
     }
   ],
 
