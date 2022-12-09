@@ -33,7 +33,8 @@ public class GameBoard {
             promptStartGame();
         }
     }
-    private void clearConsole(){
+
+    private void clearConsole() {
         for (int i = 0; i < 100; i++) {
             System.out.println();
         }
@@ -43,6 +44,7 @@ public class GameBoard {
         prompter = new Prompter(new Scanner(System.in));
         prompter.prompt("\nPress 'c' to continue...", "c", "Invalid Category. Please press 'c'");
     }
+
     private void welcome() {
         System.out.println();
         System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
@@ -108,7 +110,7 @@ public class GameBoard {
         pressToContinue();
         clearConsole();
         try {
-           player = mapBoard.printPlayerData();
+            player = mapBoard.printPlayerData();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -123,10 +125,9 @@ public class GameBoard {
                 mapBoard.showWildlifeAtLocation();
             }
 
-
             mapBoard.showItemsAtLocation();
             getItemsPrompt();
-
+            getKeyItemsPrompt();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -137,10 +138,10 @@ public class GameBoard {
     public void getDirectionPrompt() {
         try {
             StringBuilder directionsStr = new StringBuilder();
-            List<Direction> allDirections =  mapBoard.getAllDirections();
+            List<Direction> allDirections = mapBoard.getAllDirections();
             Map<String, String> directionsHM = new HashMap<>();
 
-            for (Direction dir: allDirections){
+            for (Direction dir : allDirections) {
                 directionsHM.put(dir.getDirectionName().toLowerCase(), dir.getPlace());
 
                 directionsStr.append("Go ");
@@ -148,16 +149,16 @@ public class GameBoard {
                 directionsStr.append(" | ");
             }
 
-            String directionPrompt = "Choose your next destination wisely, " + player.getName() + "? \n" +directionsStr.toString()+ "\n>";
+            String directionPrompt = "Choose your next destination wisely, " + player.getName() + "? \n" + directionsStr.toString() + "\n>";
             String directionOptions = convertToPromptOption(allDirections);
-            String directionErrMsg = "Invalid input!(Case Sensitive)";
+            String directionErrMsg = "Invalid input!)";
 
             System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
-            String inputDirection = prompter.prompt(ANSI_YELLOW + directionPrompt,  directionOptions,directionErrMsg + ANSI_RESET);
+            String inputDirection = prompter.prompt(ANSI_YELLOW + directionPrompt, directionOptions, directionErrMsg + ANSI_RESET);
             System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
             inputDirection = inputDirection.toLowerCase().substring(3);
 
-            if (inputDirection != null && inputDirection != ""){
+            if (inputDirection != null && inputDirection != "") {
                 player.setCurrentLocation(directionsHM.get(inputDirection));
                 clearConsole();
                 System.out.println("Your current location: " + player.getCurrentLocation());
@@ -168,8 +169,8 @@ public class GameBoard {
 
                 mapBoard.showItemsAtLocation();
                 getItemsPrompt();
-
-                player.getInventory().showInventory();
+                mapBoard.showKeyItemsAtLocation();
+                getKeyItemsPrompt();
 
                 mapBoard.showWildlifeAtLocation();
                 //
@@ -184,24 +185,49 @@ public class GameBoard {
     private void getItemsPrompt() throws FileNotFoundException {
         //if items in this locations, allow player to pick
         List<Items> allItems = mapBoard.getItemsAtLocation(player.getCurrentLocation());
-        if (allItems != null && allItems.size()>0){
+        if (allItems != null && allItems.size() > 0) {
             //get all items in Player's current location
-            String inputDirection = prompter.prompt( "Do you want to pick an item? (Type Get [Item_Name])", convertToPromptOptionItems(allItems) , "Please select from the items available!" );
-            inputDirection = inputDirection.toLowerCase().substring(4);
+            String input = prompter.prompt(ANSI_BLUE + "Do you want to pick an item? (Type Get [Item_Name])\n>", convertToPromptOptionItems(allItems), "Please select from the items available!" + ANSI_RESET);
+            input = input.equalsIgnoreCase("no") ? input : input.toLowerCase().substring(4);
 
-            for (Items item: allItems){
-                if (item.getName().equalsIgnoreCase(inputDirection)){
-                    player.getInventory().addToInventory(item);
-                    System.out.printf("%s, successfully added to the inventory!\n", item.getName().toUpperCase());
+            if (!input.equalsIgnoreCase("no")){
+                for (Items item : allItems) {
+                    if (item.getName().equalsIgnoreCase(input)) {
+                        player.getInventory().addToInventory(item);
+                        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
+                        System.out.printf("%s, successfully added to the inventory!\n", item.getName().toUpperCase());
+                    }
+                    break;
                 }
-                break;
+                player.getInventory().showInventory();
             }
         }
     }
 
-    private String convertToPromptOption(List<Direction> allDirections){
+    private void getKeyItemsPrompt() throws FileNotFoundException {
+        List<KeyItems> allKeyItems = mapBoard.getKeyItemsAtLocation(player.getCurrentLocation());
+        if (allKeyItems != null && allKeyItems.size()>0){
+            String input = prompter.prompt(ANSI_BLUE + "Do you want to pick a key item? (Type Get [KeyItem_Name])\n>", convertToPromptOptionKeyItems(allKeyItems), "Please select from the key items available!" + ANSI_RESET);
+            input = input.equalsIgnoreCase("no") ? input : input.toLowerCase().substring(4);
+
+            if (!input.equalsIgnoreCase("no")){
+                for (KeyItems item : allKeyItems) {
+                    if (item.getKeyItems().equalsIgnoreCase(input)) {
+                        player.getInventory().addToKeyItemsInventory(item);
+                        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
+                        System.out.printf("%s, successfully added to the inventory!\n", item.getKeyItems().toUpperCase());
+                    }
+                    break;
+                }
+                player.getInventory().showInventory();
+            }
+        }
+    }
+
+    private String convertToPromptOption(List<Direction> allDirections) {
         StringBuilder directionsStr = new StringBuilder();
-        for (Direction dir: allDirections){
+        directionsStr.append("(?i)");
+        for (Direction dir : allDirections) {
             directionsStr.append("Go ");
             directionsStr.append(dir.getDirectionName());
             directionsStr.append("|");
@@ -209,13 +235,27 @@ public class GameBoard {
         return directionsStr.toString();
     }
 
-    private String convertToPromptOptionItems( List<Items> allItems){
+    private String convertToPromptOptionItems(List<Items> allItems) {
         StringBuilder itemsStr = new StringBuilder();
-        for (Items item: allItems){
+        itemsStr.append("(?i)");
+        for (Items item : allItems) {
             itemsStr.append("Get ");
             itemsStr.append(item.getName());
             itemsStr.append("|");
         }
+        itemsStr.append("no");
+        return itemsStr.toString();
+    }
+
+    private String convertToPromptOptionKeyItems(List<KeyItems> allItems) {
+        StringBuilder itemsStr = new StringBuilder();
+        itemsStr.append("(?i)");
+        for (KeyItems item : allItems) {
+            itemsStr.append("Get ");
+            itemsStr.append(item.getKeyItems().toString());
+            itemsStr.append("|");
+        }
+        itemsStr.append("no");
         return itemsStr.toString();
     }
 
@@ -268,20 +308,24 @@ public class GameBoard {
             System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
             System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
         } else {
-           switch (stage){
-               case 1:
-                   promptStartGame();
-                   break;
-               case 2:
-                   startGame();
-                   break;
-               case 3:
-                   showInstructions();
-                   break;
-               default:
-           }
+            switch (stage) {
+                case 1:
+                    promptStartGame();
+                    break;
+                case 2:
+                    startGame();
+                    break;
+                case 3:
+                    showInstructions();
+                    break;
+                case 4:
+                    getDirectionPrompt();
+                    break;
+                default:
+            }
         }
     }
+
     public void gameOver() {
 
     }

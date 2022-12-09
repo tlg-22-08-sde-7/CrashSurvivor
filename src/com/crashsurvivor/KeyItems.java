@@ -1,18 +1,10 @@
 package com.crashsurvivor;
 
-class KeyItems {
+public class KeyItems {
     private String keyItems;
 
     public KeyItems(String keyItems) {
-        this.keyItems = keyItems;
-    }
-
-    private void addKeyItem() {
-
-    }
-
-    private void removeKeyItem() {
-
+        setKeyItems(keyItems);
     }
 
     public String getKeyItems() {
