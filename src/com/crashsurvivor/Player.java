@@ -82,6 +82,7 @@ public class Player {
     }
 
     private void flee() {
+
     }
 
     private void eat(String food) {
