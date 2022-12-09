@@ -15,9 +15,11 @@ public class Player {
     private int speed;
     String currentPlayer;
     private Prompter prompter;
+
     GameBoard gameBoard;
     Items weapons;
     Inventory inventory;
+
 
     public Player(String name, int health, int hydration, int strength, int speed, String currentLocation) {
         setSpeed(speed);
@@ -29,14 +31,14 @@ public class Player {
         inventory = new Inventory();
     }
 
-
-
     private void move() {
 
     }
 
 
+
     private void playerAttack(Player player, Wildlife wildlife) {
+
         int newWildlifeHealth = wildlife.getHealth() - player.getStrength();
         wildlife.setHealth(newWildlifeHealth);
     }
@@ -61,13 +63,17 @@ public class Player {
                         "Invalid choice. Please choose a valid choice!");
                 useItem.toLowerCase();
                 if (useItem.equals("eat")) {
+
 //                    eat();
                     map.displayWildlife(wildlife, file);
+
                     map.printPlayerInfo(player);
                     wildlifePrompt(gameBoard, wildlife, player, map, file);
                 } else if (useItem.equals("drink")) {
+
 //                    drink();
                     map.displayWildlife(wildlife, file);
+
                     map.printPlayerInfo(player);
                     wildlifePrompt(gameBoard, wildlife, player, map, file);
                 }
