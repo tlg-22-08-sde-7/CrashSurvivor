@@ -1,10 +1,11 @@
 package com.crashsurvivor;
 
-class Wildlife {
+public class Wildlife {
     private String name;
     private int health;
     private int strength;
     private int speed;
+    private Items weapons;
 
     public Wildlife(String name, int health, int strength, int speed) {
         setSpeed(speed);
@@ -13,8 +14,9 @@ class Wildlife {
         setStrength(strength);
     }
 
-    private void attack() {
-
+    public void wildlifeAttack(Player player, Wildlife wildlife) {
+        int newPlayerHealth = player.getHealth() - wildlife.getStrength();
+        player.setHealth(newPlayerHealth);
     }
 
     private void retreat() {
@@ -51,5 +53,11 @@ class Wildlife {
 
     public void setSpeed(int speed) {
         this.speed = speed;
+    }
+
+    @Override
+    public String toString() {
+        return "Wildlife = " + getName() + " | health = " + getHealth() + " | strength = " +
+                getStrength() + " | speed = " + getSpeed();
     }
 }
