@@ -23,11 +23,32 @@ public class Inventory {
     }
 
     public void addToInventory(Items item) {
-        inventoryList.add(item);
+        List<String> allItems = new ArrayList<>();
+        for (Items ki: inventoryList){
+            allItems.add(ki.getName());
+        }
+
+        if (!allItems.contains(item.getName())){
+            inventoryList.add(item);
+            System.out.printf("%s, successfully added to the inventory!\n", item.getName().toUpperCase());
+        }else {
+            System.out.printf("%s, is already in the inventory,\n", item.getName());
+        }
+
     }
 
     public void addToKeyItemsInventory(KeyItems item) {
-        inventoryKeyItems.add(item);
+        List<String> allKeyItems = new ArrayList<>();
+        for (KeyItems ki: inventoryKeyItems){
+            allKeyItems.add(ki.getKeyItems());
+        }
+
+        if (!allKeyItems.contains(item.getKeyItems())){
+            inventoryKeyItems.add(item);
+            System.out.printf("%s, successfully added to the inventory!\n", item.getKeyItems().toUpperCase());
+        }else {
+            System.out.printf("%s, is already in the inventory\n", item.getKeyItems());
+        }
     }
 
     private void removeFromInventory(Items item) {
