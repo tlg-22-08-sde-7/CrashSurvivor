@@ -23,7 +23,7 @@ public class Music {
             e.printStackTrace();
         }
     }
-    
+
 
 //    public void stop(){
 //        audioClip.close();

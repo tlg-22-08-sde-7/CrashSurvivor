@@ -22,6 +22,7 @@ public class GameBoard {
     MapBoard mapBoard = new MapBoard();
     Player player;
     Wildlife wildlife;
+    Music audioPlayer = new Music();
 
     public void execute(GameBoard gameBoard) {
         clearConsole();
@@ -50,6 +51,11 @@ public class GameBoard {
         System.out.println();
         printLine(150);
         printLine(150);
+        try{
+            audioPlayer.start("CrashSurvivor/resources/rain-and-thunder.wav");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         System.out.println(ANSI_GREEN + "W E L C O M E  T O  T H E  G A M E!" + ANSI_RESET);
         try (BufferedReader br = new BufferedReader(new FileReader("CrashSurvivor/resources/banner.txt"))) {
             String line;
