@@ -2,7 +2,7 @@ package com.crashsurvivor;
 
 import java.util.List;
 
-class Location {
+public class Location {
 
     private final String name;
     public List<Direction> directions = null;

@@ -1,6 +1,6 @@
 package com.crashsurvivor;
 
-class Description {
+public class Description {
     private final String description;
 
     Description(String description) {

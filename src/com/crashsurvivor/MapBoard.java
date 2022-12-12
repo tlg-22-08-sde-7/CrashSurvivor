@@ -12,8 +12,16 @@ import java.util.Scanner;
 
 public class MapBoard {
     private final Prompter prompter = new Prompter(new Scanner(System.in));
-    Wildlife wildlife;
-    Player player;
+//    List<Location> locations = new ArrayList<>();
+//    List<Description> descriptions = new ArrayList<>();
+//    List<Player> playersList = new ArrayList<>();
+//    List<Items> items = new ArrayList<>();
+//    List<Wildlife> wildlifeList = new ArrayList<>();
+//    List<KeyItems> keyItems = new ArrayList<>();
+//    List<Direction> directions = new ArrayList<>();
+//    JsonArray jsonArrayOfWildlifeInLocation = new JsonArray();
+//    Player player;
+//    Wildlife wildlife;
 
     File input = new File("CrashSurvivor/resources/location.json");
 
@@ -32,21 +40,21 @@ public class MapBoard {
             allLocationsList(jsonArrayOfLocations, locations);
 
             // Create sublists for the List<Locations>
-            List<Location> A = locations.subList(0, 7);
-            List<Location> B = locations.subList(7, 14);
-            List<Location> C = locations.subList(14, 21);
-            List<Location> D = locations.subList(21, 28);
-            List<Location> E = locations.subList(28, 35);
-            List<Location> F = locations.subList(35, 42);
+            List<Location> alphaRow = locations.subList(0, 7);
+            List<Location> bravoRow = locations.subList(7, 14);
+            List<Location> charlieRow = locations.subList(14, 21);
+            List<Location> deltaRow = locations.subList(21, 28);
+            List<Location> echoRow = locations.subList(28, 35);
+            List<Location> foxtrotRow = locations.subList(35, 42);
 
             // Create layout of the MapBoard, removing unnecessary items from Array
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            aLocations(A);
-            bLocations(B);
-            cLocations(C);
-            dLocations(D);
-            eLocations(E);
-            fLocations(F);
+            aLocations(alphaRow);
+            bLocations(bravoRow);
+            cLocations(charlieRow);
+            dLocations(deltaRow);
+            eLocations(echoRow);
+            fLocations(foxtrotRow);
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -437,8 +445,6 @@ public class MapBoard {
             displayWildlife(wildlife, wildlifeFile);
             printWildlife(wildlife);
             player.wildlifePrompt(gameBoard, wildlife, player, map, wildlifeFile);
-
-
         }
     }
 
@@ -490,8 +496,204 @@ public class MapBoard {
             }
         }
     }
+    /*public void readAllJson() throws FileNotFoundException {
 
- 
+        JsonElement fileElement = JsonParser.parseReader(new FileReader(input));
+        JsonObject fileObject = fileElement.getAsJsonObject();
+        JsonArray jsonArrayOfLocations = fileObject.get("locations").getAsJsonArray();
+        JsonArray jsonArrayOfPlayers = fileObject.get("players").getAsJsonArray();
+        JsonArray jsonArrayOfWildlife = fileObject.get("wildlife").getAsJsonArray();
+        for (JsonElement jsonLocationElement : jsonArrayOfLocations) {
+            JsonObject jsonObjectOfLocations = jsonLocationElement.getAsJsonObject();
+            String name = jsonObjectOfLocations.get("name").getAsString();
+            String description = jsonObjectOfLocations.get("description").getAsString();
+            jsonArrayOfWildlifeInLocation = jsonObjectOfLocations.get("wildlifeInLocation").getAsJsonArray();
+            JsonArray allDirections = jsonObjectOfLocations.get("directions").getAsJsonArray();
+            JsonArray jsonArrayOfItems = jsonObjectOfLocations.get("items").getAsJsonArray();
+            JsonArray jsonArrayOfKeyItems = jsonObjectOfLocations.get("keyItems").getAsJsonArray();
+
+
+            if (Objects.equals(Player.getCurrentLocation(), name)) {
+                Description descriptionText = new Description(description);
+                descriptions.add(descriptionText);
+                String keyItemName = jsonArrayOfKeyItems.toString();
+                KeyItems keyItemsAtLocation = new KeyItems(keyItemName);
+                keyItems.add(keyItemsAtLocation);
+            }
+            String wildlifeAtLocation = jsonArrayOfWildlifeInLocation.toString()
+                    .replace("[", "")
+                    .replace("]", "")
+                    .replace("\"", "");
+            System.out.println(wildlifeAtLocation);
+            if (Objects.equals(Player.getCurrentLocation(), name)) {
+                for (JsonElement wildlifeElement : jsonArrayOfWildlife) {
+                    JsonObject wildlifeJsonObject = wildlifeElement.getAsJsonObject();
+                    String wildlifeName = wildlifeJsonObject.get("name").getAsString();
+                    JsonElement health = wildlifeJsonObject.get("health");
+                    JsonElement strength = wildlifeJsonObject.get("strength");
+                    JsonElement speed = wildlifeJsonObject.get("speed");
+                    wildlife = new Wildlife(wildlifeName,
+                            health.getAsInt(), strength.getAsInt(), speed.getAsInt());
+                    wildlifeList.add(wildlife);
+                    System.out.println(wildlifeList);
+                }
+                if (wildlifeList.get(0).getName().equals(wildlifeAtLocation)) {
+                    wildlife = wildlifeList.get(0);
+                    currentWildlifeAtLocation(wildlifeAtLocation, "Monkey", "CrashSurvivor/resources/monkey.txt");
+                    if (wildlife.getHealth() < 1) {
+                        jsonArrayOfWildlifeInLocation.remove(0);
+                    }
+                } else if (wildlifeList.get(1).getName().equals(wildlifeAtLocation)) {
+                    wildlife = wildlifeList.get(1);
+                    currentWildlifeAtLocation(wildlifeAtLocation, "Wild Boar", "CrashSurvivor/resources/wildboar.txt");
+                    if (wildlife.getHealth() < 1) {
+                        jsonArrayOfWildlifeInLocation.remove(0);
+                    }
+                } else if (wildlifeList.get(2).getName().equals(wildlifeAtLocation)) {
+                    wildlife = wildlifeList.get(2);
+                    currentWildlifeAtLocation(wildlifeAtLocation, "Bat", "CrashSurvivor/resources/bat.txt");
+                    if (wildlife.getHealth() < 1) {
+                        jsonArrayOfWildlifeInLocation.remove(0);
+                    }
+                } else if (wildlifeList.get(3).getName().equals(wildlifeAtLocation)) {
+                    wildlife = wildlifeList.get(3);
+                    currentWildlifeAtLocation(wildlifeAtLocation, "Snake", "CrashSurvivor/resources/snake.txt");
+                    if (wildlife.getHealth() < 1) {
+                        jsonArrayOfWildlifeInLocation.remove(0);
+                    }
+                } else if (wildlifeList.get(4).getName().equals(wildlifeAtLocation)) {
+                    wildlife = wildlifeList.get(4);
+                    System.out.println(jsonArrayOfWildlifeInLocation);
+                    currentWildlifeAtLocation(wildlifeAtLocation, "Crocodile", "CrashSurvivor/resources/crocodile.txt");
+                    if (wildlife.getHealth() < 1) {
+                        jsonArrayOfWildlifeInLocation.remove(0);
+                    }
+                } else if (wildlifeList.get(5).getName().equals(wildlifeAtLocation)) {
+                    wildlife = wildlifeList.get(5);
+                    currentWildlifeAtLocation(wildlifeAtLocation, "Rhino", "CrashSurvivor/resources/rhino.txt");
+                    if (wildlife.getHealth() < 1) {
+                        jsonArrayOfWildlifeInLocation.remove(0);
+                    }
+                }
+            }
+            if (Objects.equals(Player.getCurrentLocation(), name)) {
+                for (JsonElement itemElement : jsonArrayOfItems) {
+                    JsonObject itemJsonObject = itemElement.getAsJsonObject();
+                    String itemName = itemJsonObject.get("name").getAsString();
+                    JsonElement hydration = itemJsonObject.get("hydration");
+                    JsonElement health = itemJsonObject.get("health");
+                    JsonElement strength = itemJsonObject.get("strength");
+                    JsonElement speed = itemJsonObject.get("speed");
+                    Items itemsAtLocation = new Items(itemName, hydration.getAsInt(),
+                            health.getAsInt(), strength.getAsInt(), speed.getAsInt());
+                    items.add(itemsAtLocation);
+                }
+            }
+            if (Objects.equals(Player.getCurrentLocation(), name)) {
+                for (JsonElement directionElement : allDirections) {
+                    JsonObject directionJsonObject = directionElement.getAsJsonObject();
+                    String directionName = directionJsonObject.get("directionName").getAsString();
+                    String place = directionJsonObject.get("place").getAsString();
+                    Direction direction = new Direction(directionName, place);
+                    directions.add(direction);
+                }
+            }
+            if (Objects.equals(Player.getCurrentLocation(), name)) {
+                name = "{XX}";
+            } else {
+                name = "{  }";
+            }
+
+            // This allows us to use the toString method of the Location class
+            Location location = new Location(name);
+            // Every name and description is added to the locations List
+            locations.add(location);
+            System.out.println(locations);
+        }
+        System.out.println(descriptions);
+        for (JsonElement playerElement : jsonArrayOfPlayers) {
+            JsonObject playerJsonObject = playerElement.getAsJsonObject();
+            String name = playerJsonObject.get("name").getAsString();
+            JsonElement health = playerJsonObject.get("health");
+            JsonElement hydration = playerJsonObject.get("hydration");
+            JsonElement strength = playerJsonObject.get("strength");
+            JsonElement speed = playerJsonObject.get("speed");
+            String currentLocation = playerJsonObject.get("currentLocation").getAsString();
+            player = new Player(name, health.getAsInt(), hydration.getAsInt(),
+                    strength.getAsInt(), speed.getAsInt(), currentLocation);
+            playersList.add(player);
+        }
+    }
+    public Player printOnePlayerData() throws FileNotFoundException {
+        System.out.println("Choose from the following characters (" +
+                "Arnold, Jennifer, Jason, or Scarlett):\n");
+
+        printPlayersInfo(playersList);
+
+        String valueInput = prompter.prompt("Type your choice> ", getPlayersName(playersList),
+                "Please select a valid character!");
+        String chosenPlayer = valueInput.toLowerCase();
+
+        for (Player p : playersList) {
+            if (p.getName().toLowerCase().equalsIgnoreCase(chosenPlayer)) {
+                player = p;
+                System.out.println(player);
+            }
+        }
+        return player;
+    }
+
+    private void printKeyItemsAtLocation() {
+        System.out.println(keyItems.toString()
+                .replace("[", "")
+                .replace("]", ""));
+    }
+
+    private void printItemsAtLocation() {
+        System.out.println(items.toString()
+                .replace("[", "")
+                .replace("]", ""));
+    }
+
+    private void printMapOfLocations() {
+        // Create sublists for the List<Locations>
+        List<Location> alphaRow = locations.subList(0, 7);
+        List<Location> bravoRow = locations.subList(7, 14);
+        List<Location> charlieRow = locations.subList(14, 21);
+        List<Location> deltaRow = locations.subList(21, 28);
+        List<Location> echoRow = locations.subList(28, 35);
+        List<Location> foxtrotRow = locations.subList(35, 42);
+
+        // Create layout of the MapBoard, removing unnecessary items from Array
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        aLocations(alphaRow);
+        bLocations(bravoRow);
+        cLocations(charlieRow);
+        dLocations(deltaRow);
+        eLocations(echoRow);
+        fLocations(foxtrotRow);
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    }
+    private void currentWildlifeAtLocation(String wildlifeAtLocation, String wildlifeName, String wildlifeFile) throws FileNotFoundException {
+        if (wildlifeAtLocation.equals(wildlife.getName()) && wildlife.getHealth() > 1) {
+            displayWildlife(wildlife, wildlifeFile);
+            printWildlife(wildlife);
+        }
+    }
+    public void printSinglePlayerInfo() {
+        System.out.println(player.toString());
+    }
+
+    public static void main(String[] args) throws FileNotFoundException {
+        MapBoard map = new MapBoard();
+        Player player;
+        map.readAllJson();
+        player = map.printOnePlayerData();
+        map.printMapOfLocations();
+        map.printKeyItemsAtLocation();
+        map.printItemsAtLocation();
+        map.printSinglePlayerInfo();
+    }*/
 }
 
 
