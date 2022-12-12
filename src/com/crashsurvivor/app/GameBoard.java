@@ -51,7 +51,7 @@ public class GameBoard {
         printLine(150);
         printLine(150);
         try{
-            audioPlayer.start("CrashSurvivor/resources/rain-and-thunder.wav");
+           // audioPlayer.start("CrashSurvivor/resources/rain-and-thunder.wav");
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -123,6 +123,7 @@ public class GameBoard {
         clearConsole();
         mapBoard.printMap();
         mapBoard.printDescriptionData();
+        System.out.println(player.getLocationVisited());
         try {
             mapBoard.showKeyItemsAtLocation();
             mapBoard.showWildlifeAtLocation(wildlife, player, mapBoard, gameBoard);
@@ -167,9 +168,10 @@ public class GameBoard {
                 player.setCurrentLocation(directionsHM.get(inputDirection));
                 clearConsole();
                 System.out.println("Your current location: " + player.getCurrentLocation());
+                player.setLocationVisited(player.getCurrentLocation());
                 mapBoard.printMap();
                 mapBoard.printDescriptionData();
-
+                System.out.println(player.getLocationVisited());
                 mapBoard.printPlayerInfo(player);
                 mapBoard.showItemsAtLocation();
                 printLine(50);

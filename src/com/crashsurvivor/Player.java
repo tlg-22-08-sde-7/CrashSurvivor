@@ -4,6 +4,7 @@ import com.apps.util.Prompter;
 import com.crashsurvivor.app.GameBoard;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -21,6 +22,7 @@ public class Player {
     GameBoard gameBoard;
     Items weapons;
     Inventory inventory;
+    private List<String> locationVisited = new ArrayList<>();
 
 
     public Player(String name, int health, int hydration, int strength, int speed, String currentLocation) {
@@ -208,6 +210,15 @@ public class Player {
 
     public void setUse(String use) {
         this.use = use;
+    }
+
+    public List<String> getLocationVisited() {
+        System.out.print("Location Visited: ");
+        return locationVisited;
+    }
+
+    public void setLocationVisited(String locationVisited) {
+        this.locationVisited.add(locationVisited);
     }
 
     @Override
