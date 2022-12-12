@@ -12,16 +12,17 @@ import java.util.Scanner;
 
 public class MapBoard {
     private final Prompter prompter = new Prompter(new Scanner(System.in));
-//    List<Location> locations = new ArrayList<>();
-//    List<Description> descriptions = new ArrayList<>();
-//    List<Player> playersList = new ArrayList<>();
-//    List<Items> items = new ArrayList<>();
-//    List<Wildlife> wildlifeList = new ArrayList<>();
-//    List<KeyItems> keyItems = new ArrayList<>();
-//    List<Direction> directions = new ArrayList<>();
-//    JsonArray jsonArrayOfWildlifeInLocation = new JsonArray();
-//    Player player;
-//    Wildlife wildlife;
+    List<Location> locations = new ArrayList<>();
+    List<Description> descriptions = new ArrayList<>();
+    List<Player> playersList = new ArrayList<>();
+    List<Items> items = new ArrayList<>();
+    List<Wildlife> wildlifeList = new ArrayList<>();
+    List<KeyItems> keyItems = new ArrayList<>();
+    List<Direction> directions = new ArrayList<>();
+    JsonArray jsonArrayOfWildlifeInLocation = new JsonArray();
+    String wildlifeAtLocation;
+    Player player;
+    Wildlife wildlife;
 
     File input = new File("CrashSurvivor/resources/location.json");
 
@@ -496,7 +497,7 @@ public class MapBoard {
             }
         }
     }
-    /*public void readAllJson() throws FileNotFoundException {
+    public void readAllJson() throws FileNotFoundException {
 
         JsonElement fileElement = JsonParser.parseReader(new FileReader(input));
         JsonObject fileObject = fileElement.getAsJsonObject();
@@ -520,11 +521,6 @@ public class MapBoard {
                 KeyItems keyItemsAtLocation = new KeyItems(keyItemName);
                 keyItems.add(keyItemsAtLocation);
             }
-            String wildlifeAtLocation = jsonArrayOfWildlifeInLocation.toString()
-                    .replace("[", "")
-                    .replace("]", "")
-                    .replace("\"", "");
-            System.out.println(wildlifeAtLocation);
             if (Objects.equals(Player.getCurrentLocation(), name)) {
                 for (JsonElement wildlifeElement : jsonArrayOfWildlife) {
                     JsonObject wildlifeJsonObject = wildlifeElement.getAsJsonObject();
@@ -535,46 +531,11 @@ public class MapBoard {
                     wildlife = new Wildlife(wildlifeName,
                             health.getAsInt(), strength.getAsInt(), speed.getAsInt());
                     wildlifeList.add(wildlife);
-                    System.out.println(wildlifeList);
                 }
-                if (wildlifeList.get(0).getName().equals(wildlifeAtLocation)) {
-                    wildlife = wildlifeList.get(0);
-                    currentWildlifeAtLocation(wildlifeAtLocation, "Monkey", "CrashSurvivor/resources/monkey.txt");
-                    if (wildlife.getHealth() < 1) {
-                        jsonArrayOfWildlifeInLocation.remove(0);
-                    }
-                } else if (wildlifeList.get(1).getName().equals(wildlifeAtLocation)) {
-                    wildlife = wildlifeList.get(1);
-                    currentWildlifeAtLocation(wildlifeAtLocation, "Wild Boar", "CrashSurvivor/resources/wildboar.txt");
-                    if (wildlife.getHealth() < 1) {
-                        jsonArrayOfWildlifeInLocation.remove(0);
-                    }
-                } else if (wildlifeList.get(2).getName().equals(wildlifeAtLocation)) {
-                    wildlife = wildlifeList.get(2);
-                    currentWildlifeAtLocation(wildlifeAtLocation, "Bat", "CrashSurvivor/resources/bat.txt");
-                    if (wildlife.getHealth() < 1) {
-                        jsonArrayOfWildlifeInLocation.remove(0);
-                    }
-                } else if (wildlifeList.get(3).getName().equals(wildlifeAtLocation)) {
-                    wildlife = wildlifeList.get(3);
-                    currentWildlifeAtLocation(wildlifeAtLocation, "Snake", "CrashSurvivor/resources/snake.txt");
-                    if (wildlife.getHealth() < 1) {
-                        jsonArrayOfWildlifeInLocation.remove(0);
-                    }
-                } else if (wildlifeList.get(4).getName().equals(wildlifeAtLocation)) {
-                    wildlife = wildlifeList.get(4);
-                    System.out.println(jsonArrayOfWildlifeInLocation);
-                    currentWildlifeAtLocation(wildlifeAtLocation, "Crocodile", "CrashSurvivor/resources/crocodile.txt");
-                    if (wildlife.getHealth() < 1) {
-                        jsonArrayOfWildlifeInLocation.remove(0);
-                    }
-                } else if (wildlifeList.get(5).getName().equals(wildlifeAtLocation)) {
-                    wildlife = wildlifeList.get(5);
-                    currentWildlifeAtLocation(wildlifeAtLocation, "Rhino", "CrashSurvivor/resources/rhino.txt");
-                    if (wildlife.getHealth() < 1) {
-                        jsonArrayOfWildlifeInLocation.remove(0);
-                    }
-                }
+                wildlifeAtLocation = jsonArrayOfWildlifeInLocation.toString()
+                        .replace("[", "")
+                        .replace("]", "")
+                        .replace("\"", "");
             }
             if (Objects.equals(Player.getCurrentLocation(), name)) {
                 for (JsonElement itemElement : jsonArrayOfItems) {
@@ -608,9 +569,8 @@ public class MapBoard {
             Location location = new Location(name);
             // Every name and description is added to the locations List
             locations.add(location);
-            System.out.println(locations);
         }
-        System.out.println(descriptions);
+
         for (JsonElement playerElement : jsonArrayOfPlayers) {
             JsonObject playerJsonObject = playerElement.getAsJsonObject();
             String name = playerJsonObject.get("name").getAsString();
@@ -624,6 +584,75 @@ public class MapBoard {
             playersList.add(player);
         }
     }
+
+    private void printDescriptions() {
+        System.out.println(descriptions);
+    }
+
+    private void currentWildlife() throws FileNotFoundException {
+
+        if (wildlifeList.get(0).getName().equals(wildlifeAtLocation)) {
+            wildlife = wildlifeList.get(0);
+            currentWildlifeAtLocation(wildlifeAtLocation, "Monkey", "CrashSurvivor/resources/monkey.txt");
+            if (wildlife.getHealth() < 1) {
+                jsonArrayOfWildlifeInLocation.remove(0);
+            }
+        } else if (wildlifeList.get(1).getName().equals(wildlifeAtLocation)) {
+            wildlife = wildlifeList.get(1);
+            currentWildlifeAtLocation(wildlifeAtLocation, "Wild Boar", "CrashSurvivor/resources/wildboar.txt");
+            if (wildlife.getHealth() < 1) {
+                jsonArrayOfWildlifeInLocation.remove(0);
+            }
+        } else if (wildlifeList.get(2).getName().equals(wildlifeAtLocation)) {
+            wildlife = wildlifeList.get(2);
+            currentWildlifeAtLocation(wildlifeAtLocation, "Bat", "CrashSurvivor/resources/bat.txt");
+            if (wildlife.getHealth() < 1) {
+                jsonArrayOfWildlifeInLocation.remove(0);
+            }
+        } else if (wildlifeList.get(3).getName().equals(wildlifeAtLocation)) {
+            wildlife = wildlifeList.get(3);
+            currentWildlifeAtLocation(wildlifeAtLocation, "Snake", "CrashSurvivor/resources/snake.txt");
+            if (wildlife.getHealth() < 1) {
+                wildlifeAtLocation = "";
+            }
+        } else if (wildlifeList.get(4).getName().equals(wildlifeAtLocation)) {
+            wildlife = wildlifeList.get(4);
+            currentWildlifeAtLocation(wildlifeAtLocation, "Crocodile", "CrashSurvivor/resources/crocodile.txt");
+            if (wildlife.getHealth() < 1) {
+                wildlifeAtLocation = "";
+            }
+        } else if (wildlifeList.get(5).getName().equals(wildlifeAtLocation)) {
+            wildlife = wildlifeList.get(5);
+            currentWildlifeAtLocation(wildlifeAtLocation, "Rhino", "CrashSurvivor/resources/rhino.txt");
+            if (wildlife.getHealth() < 1) {
+                jsonArrayOfWildlifeInLocation.remove(0);
+            }
+        }
+    }
+    public void displayWildlifePicture(String file) {
+        printWildlife(wildlife);
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line1;
+            while ((line1 = br.readLine()) != null) {
+                System.out.println(line1);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void printCurrentWildlife() {
+        System.out.println(wildlife.toString()
+                .replace("[", "")
+                .replace("]", ""));
+    }
+    private void currentWildlifeAtLocation(String wildlifeAtLocation, String wildlifeName, String wildlifeFile) throws FileNotFoundException {
+        if (wildlifeAtLocation.equals(wildlife.getName()) && wildlife.getHealth() > 1) {
+            displayWildlifePicture(wildlifeFile);
+            printCurrentWildlife();
+        }
+    }
+
     public Player printOnePlayerData() throws FileNotFoundException {
         System.out.println("Choose from the following characters (" +
                 "Arnold, Jennifer, Jason, or Scarlett):\n");
@@ -641,6 +670,9 @@ public class MapBoard {
             }
         }
         return player;
+    }
+    public void printSinglePlayerInfo() {
+        System.out.println(player.toString());
     }
 
     private void printKeyItemsAtLocation() {
@@ -674,14 +706,14 @@ public class MapBoard {
         fLocations(foxtrotRow);
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
-    private void currentWildlifeAtLocation(String wildlifeAtLocation, String wildlifeName, String wildlifeFile) throws FileNotFoundException {
-        if (wildlifeAtLocation.equals(wildlife.getName()) && wildlife.getHealth() > 1) {
-            displayWildlife(wildlife, wildlifeFile);
-            printWildlife(wildlife);
-        }
-    }
-    public void printSinglePlayerInfo() {
-        System.out.println(player.toString());
+
+    public void printAllData() throws FileNotFoundException {
+        printMapOfLocations();
+        printDescriptions();
+        printKeyItemsAtLocation();
+        printItemsAtLocation();
+        printSinglePlayerInfo();
+        currentWildlife();
     }
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -693,7 +725,8 @@ public class MapBoard {
         map.printKeyItemsAtLocation();
         map.printItemsAtLocation();
         map.printSinglePlayerInfo();
-    }*/
+        map.currentWildlife();
+    }
 }
 
 
