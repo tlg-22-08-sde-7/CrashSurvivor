@@ -19,7 +19,6 @@ public class GameBoard {
     public static final String ANSI_BLUE = "\u001B[34m";
     private static boolean isRunning = false;
     private Prompter prompter;
-
     MapBoard mapBoard = new MapBoard();
     Player player;
     Wildlife wildlife;
@@ -322,7 +321,7 @@ public class GameBoard {
                     showInstructions(gameBoard);
                     break;
                 case 4:
-                    getDirectionPrompt();
+                    getDirectionPrompt(gameBoard);
                     break;
                 default:
             }
