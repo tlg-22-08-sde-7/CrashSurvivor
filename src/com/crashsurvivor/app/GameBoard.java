@@ -327,6 +327,49 @@ public class GameBoard {
             }
         }
     }
+/*    public void wildlifePrompt(String file) throws FileNotFoundException {
+        if (wildlife.getHealth() >= 1 && player.getHealth() >= 1) {
+            String choice = prompter.prompt("Do you wish to attack, flee, or use item?",
+                    "attack|flee|use item", "Invalid Choice, choose a valid choice!");
+            choice.toLowerCase();
+            if (choice.equals("attack")) {
+                player.playerAttack(player, wildlife);
+                System.out.println(wildlife.getHealth());
+                wildlife.wildlifeAttack(player, wildlife);
+                System.out.println(player.getHealth());
+                mapBoard.displayWildlifePicture(file);
+                mapBoard.printSinglePlayerInfo();
+                wildlifePrompt(file);
+            } else if (choice.equals("flee")) {
+                player.flee();
+            } else if (choice.equals("use item")) {
+                String useItem = prompter.prompt("Do you wish to eat or drink?", "eat|drink",
+                        "Invalid choice. Please choose a valid choice!");
+                useItem.toLowerCase();
+                if (useItem.equals("eat")) {
+
+//                    eat();
+                    mapBoard.displayWildlifePicture(file);
+
+                    mapBoard.printSinglePlayerInfo();
+                    wildlifePrompt(file);
+                } else if (useItem.equals("drink")) {
+
+//                    drink();
+                    mapBoard.displayWildlifePicture(file);
+
+                    mapBoard.printSinglePlayerInfo();
+                    wildlifePrompt(file);
+                }
+
+            }
+        } else if (wildlife.getHealth() < 1) {
+
+
+        } else if (player.getHealth() < 1) {
+            gameOver();
+        }
+    }*/
 
     public void gameOver() {
 
