@@ -2,7 +2,6 @@ package com.crashsurvivor.app;
 
 import com.apps.util.Prompter;
 import com.crashsurvivor.*;
-import com.sun.source.tree.IfTree;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -35,7 +34,7 @@ public class GameBoard {
         }
     }
 
-    private void clearConsole() {
+    public void clearConsole() {
         for (int i = 0; i < 100; i++) {
             System.out.println();
         }
@@ -128,6 +127,7 @@ public class GameBoard {
             getKeyItemsPrompt();
             player.getInventory().showInventory();
 
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -173,7 +173,7 @@ public class GameBoard {
                 mapBoard.showKeyItemsAtLocation();
                 getKeyItemsPrompt();
 
-               player.getInventory().showInventory();
+                player.getInventory().showInventory();
                 mapBoard.showWildlifeAtLocation(wildlife, player, mapBoard, gameBoard);
 
 
@@ -186,12 +186,13 @@ public class GameBoard {
         }
     }
 
-    private void printLine(int lines){
-        for (int i = 0; i <lines ; i++) {
+    public void printLine(int lines) {
+        for (int i = 0; i < lines; i++) {
             System.out.print("-");
         }
         System.out.println();
     }
+
     private void getItemsPrompt() throws FileNotFoundException {
         //if items in this locations, allow player to pick
         List<Items> allItems = mapBoard.getItemsAtLocation(player.getCurrentLocation());
@@ -200,7 +201,7 @@ public class GameBoard {
             String input = prompter.prompt(ANSI_BLUE + "Do you want to pick an item? (Type Get [Item_Name] or press 'no')\n>", convertToPromptOptionItems(allItems), "Please select from the items available!" + ANSI_RESET);
             input = input.equalsIgnoreCase("no") ? input : input.toLowerCase().substring(4);
 
-            if (!input.equalsIgnoreCase("no")){
+            if (!input.equalsIgnoreCase("no")) {
                 for (Items item : allItems) {
                     if (item.getName().equalsIgnoreCase(input)) {
                         player.getInventory().addToInventory(item);
@@ -208,17 +209,18 @@ public class GameBoard {
                         break;
                     }
                 }
+                clearConsole();
             }
         }
     }
 
     private void getKeyItemsPrompt() throws FileNotFoundException {
         List<KeyItems> allKeyItems = mapBoard.getKeyItemsAtLocation(player.getCurrentLocation());
-        if (allKeyItems != null && allKeyItems.size()>0){
+        if (allKeyItems != null && allKeyItems.size() > 0) {
             String input = prompter.prompt(ANSI_BLUE + "Do you want to pick a key item? (Type Get [KeyItem_Name] or press 'no')\n>", convertToPromptOptionKeyItems(allKeyItems), "Please select from the key items available!" + ANSI_RESET);
             input = input.equalsIgnoreCase("no") ? input : input.toLowerCase().substring(4);
 
-            if (!input.equalsIgnoreCase("no")){
+            if (!input.equalsIgnoreCase("no")) {
                 for (KeyItems item : allKeyItems) {
                     if (item.getKeyItems().equalsIgnoreCase(input)) {
                         player.getInventory().addToKeyItemsInventory(item);
@@ -226,6 +228,7 @@ public class GameBoard {
                         break;
                     }
                 }
+                clearConsole();
             }
         }
     }
