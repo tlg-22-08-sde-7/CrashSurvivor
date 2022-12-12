@@ -48,8 +48,8 @@ public class GameBoard {
 
     private void welcome() {
         System.out.println();
-        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
-        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
+        printLine(150);
+        printLine(150);
         System.out.println(ANSI_GREEN + "W E L C O M E  T O  T H E  G A M E!" + ANSI_RESET);
         try (BufferedReader br = new BufferedReader(new FileReader("CrashSurvivor/resources/banner.txt"))) {
             String line;
@@ -60,12 +60,12 @@ public class GameBoard {
             e.printStackTrace();
         }
         System.out.println(ANSI_GREEN + "CREATED BY: DAVID, MARTIN, NIMA" + ANSI_RESET);
-        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
+        printLine(150);
         System.out.println(ANSI_YELLOW + "As you make your maiden flight in your brand new (to you) plane you experience a sudden engine failure in your number 2 engine.\n" +
                 "In your efforts to resolve the issue your ultimately lose control. \n" +
                 "You check your heading and coordinates to try to remember where you are as there is nothing that you can do. everything fades to black.." + ANSI_RESET);
-        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
-        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
+        printLine(150);
+        printLine(150);
         System.out.println();
     }
 
@@ -126,6 +126,7 @@ public class GameBoard {
             mapBoard.showItemsAtLocation();
             getItemsPrompt();
             getKeyItemsPrompt();
+            player.getInventory().showInventory();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -151,9 +152,9 @@ public class GameBoard {
             String directionOptions = convertToPromptOption(allDirections);
             String directionErrMsg = "Invalid input!)";
 
-            System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
+            printLine(100);
             String inputDirection = prompter.prompt(ANSI_YELLOW + directionPrompt, directionOptions, directionErrMsg + ANSI_RESET);
-            System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
+            printLine(100);
             inputDirection = inputDirection.toLowerCase().substring(3);
 
             if (inputDirection != null && inputDirection != "") {
@@ -165,12 +166,14 @@ public class GameBoard {
 
                 mapBoard.printPlayerInfo(player);
                 mapBoard.showItemsAtLocation();
+                printLine(50);
+
                 getItemsPrompt();
 
                 mapBoard.showKeyItemsAtLocation();
                 getKeyItemsPrompt();
 
-                player.getInventory().showInventory();
+               player.getInventory().showInventory();
                 mapBoard.showWildlifeAtLocation(wildlife, player, mapBoard, gameBoard);
 
 
@@ -183,24 +186,28 @@ public class GameBoard {
         }
     }
 
+    private void printLine(int lines){
+        for (int i = 0; i <lines ; i++) {
+            System.out.print("-");
+        }
+        System.out.println();
+    }
     private void getItemsPrompt() throws FileNotFoundException {
         //if items in this locations, allow player to pick
         List<Items> allItems = mapBoard.getItemsAtLocation(player.getCurrentLocation());
         if (allItems != null && allItems.size() > 0) {
             //get all items in Player's current location
-            String input = prompter.prompt(ANSI_BLUE + "Do you want to pick an item? (Type Get [Item_Name])\n>", convertToPromptOptionItems(allItems), "Please select from the items available!" + ANSI_RESET);
+            String input = prompter.prompt(ANSI_BLUE + "Do you want to pick an item? (Type Get [Item_Name] or press 'no')\n>", convertToPromptOptionItems(allItems), "Please select from the items available!" + ANSI_RESET);
             input = input.equalsIgnoreCase("no") ? input : input.toLowerCase().substring(4);
 
             if (!input.equalsIgnoreCase("no")){
                 for (Items item : allItems) {
                     if (item.getName().equalsIgnoreCase(input)) {
                         player.getInventory().addToInventory(item);
-                        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
-                        System.out.printf("%s, successfully added to the inventory!\n", item.getName().toUpperCase());
+                        printLine(100);
+                        break;
                     }
-                    break;
                 }
-                player.getInventory().showInventory();
             }
         }
     }
@@ -208,19 +215,17 @@ public class GameBoard {
     private void getKeyItemsPrompt() throws FileNotFoundException {
         List<KeyItems> allKeyItems = mapBoard.getKeyItemsAtLocation(player.getCurrentLocation());
         if (allKeyItems != null && allKeyItems.size()>0){
-            String input = prompter.prompt(ANSI_BLUE + "Do you want to pick a key item? (Type Get [KeyItem_Name])\n>", convertToPromptOptionKeyItems(allKeyItems), "Please select from the key items available!" + ANSI_RESET);
+            String input = prompter.prompt(ANSI_BLUE + "Do you want to pick a key item? (Type Get [KeyItem_Name] or press 'no')\n>", convertToPromptOptionKeyItems(allKeyItems), "Please select from the key items available!" + ANSI_RESET);
             input = input.equalsIgnoreCase("no") ? input : input.toLowerCase().substring(4);
 
             if (!input.equalsIgnoreCase("no")){
                 for (KeyItems item : allKeyItems) {
                     if (item.getKeyItems().equalsIgnoreCase(input)) {
                         player.getInventory().addToKeyItemsInventory(item);
-                        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
-                        System.out.printf("%s, successfully added to the inventory!\n", item.getKeyItems().toUpperCase());
+                        printLine(100);
+                        break;
                     }
-                    break;
                 }
-                player.getInventory().showInventory();
             }
         }
     }
@@ -295,8 +300,8 @@ public class GameBoard {
 
         if (inputQuit.equals("yes")) {
             isRunning = false;
-            System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
-            System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
+            printLine(150);
+            printLine(150);
             System.out.println(ANSI_YELLOW + "Thank you for playing the game!" + ANSI_RESET);
             try (BufferedReader br = new BufferedReader(new FileReader("CrashSurvivor/resources/banner.txt"))) {
                 String line;
@@ -306,8 +311,8 @@ public class GameBoard {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
-            System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
+            printLine(150);
+            printLine(150);
         } else {
 
             switch (stage) {
@@ -319,9 +324,6 @@ public class GameBoard {
                     break;
                 case 3:
                     showInstructions(gameBoard);
-                    break;
-                case 4:
-                    getDirectionPrompt(gameBoard);
                     break;
                 default:
             }
