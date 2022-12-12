@@ -14,6 +14,9 @@ public class Inventory {
 
     public void showInventory() {
         System.out.println("Inventory: ");
+        if (inventoryList.size() <= 0){
+            System.out.println("No item(s)");
+        }
         for(Items item: inventoryList){
             System.out.println(item.toString());
         }
@@ -49,9 +52,10 @@ public class Inventory {
         }else {
             System.out.printf("%s, is already in the inventory\n", item.getKeyItems());
         }
+
     }
 
-    private void removeFromInventory(Items item) {
+    public void removeFromInventory(Items item) {
         inventoryList.remove(item);
     }
 
@@ -63,7 +67,7 @@ public class Inventory {
         Items item = null;
         if(inventoryList != null && inventoryList.size() > 0){
             for(Items i: inventoryList){
-                if(itemName.equalsIgnoreCase(item.getName())){
+                if(itemName.equalsIgnoreCase(i.getName())){
                     item = i;
                     break;
                 }
@@ -83,5 +87,13 @@ public class Inventory {
             }
         }
         return item;
+    }
+
+    public List<Items> getInventoryList() {
+        return inventoryList;
+    }
+
+    public List<KeyItems> getInventoryKeyItems() {
+        return inventoryKeyItems;
     }
 }
