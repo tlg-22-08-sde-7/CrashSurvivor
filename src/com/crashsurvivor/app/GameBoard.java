@@ -76,11 +76,6 @@ public class GameBoard {
         System.out.println();
     }
 
-    private void showBoard() {
-        System.out.println("board right here");
-        clearConsole();
-    }
-
     private void promptStartGame(GameBoard gameBoard) throws FileNotFoundException {
 
         prompter = new Prompter(new Scanner(System.in));
@@ -124,20 +119,13 @@ public class GameBoard {
             e.printStackTrace();
         }
         clearConsole();
+        System.out.println("Your current location: " + player.getCurrentLocation());
         mapBoard.printMap();
         mapBoard.printDescriptionData();
         System.out.println(player.getLocationVisited());
         try {
-            mapBoard.showKeyItemsAtLocation();
-            mapBoard.showWildlifeAtLocation(wildlife, player, mapBoard, gameBoard);
             mapBoard.printPlayerInfo(player);
-
-            mapBoard.showItemsAtLocation();
-            getItemsPrompt(gameBoard);
-            getKeyItemsPrompt(gameBoard);
-            player.getInventory().showInventory();
-
-
+            lookPrompt(gameBoard);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -165,11 +153,14 @@ public class GameBoard {
             printLine(100);
             String inputDirection = prompter.prompt(ANSI_YELLOW + directionPrompt, directionOptions, directionErrMsg + ANSI_RESET);
             printLine(100);
-            inputDirection = inputDirection.equalsIgnoreCase("no") || inputDirection.equalsIgnoreCase("quit") ? inputDirection : inputDirection.toLowerCase().substring(3);
+            inputDirection = inputDirection.equalsIgnoreCase("no") || inputDirection.equalsIgnoreCase("quit") || inputDirection.equalsIgnoreCase("help") ? inputDirection : inputDirection.toLowerCase().substring(3);
 
             if (inputDirection != null && inputDirection != "") {
                 if (inputDirection.equalsIgnoreCase("quit")) {
                     quitGame(6, gameBoard);
+                }
+                if (inputDirection.equalsIgnoreCase("help")) {
+                    showInstructions(gameBoard);
                 }
                 player.setCurrentLocation(directionsHM.get(inputDirection));
                 clearConsole();
@@ -179,23 +170,32 @@ public class GameBoard {
                 mapBoard.printDescriptionData();
                 System.out.println(player.getLocationVisited());
                 mapBoard.printPlayerInfo(player);
-                mapBoard.showItemsAtLocation();
-                printLine(50);
-
-                getItemsPrompt(gameBoard);
-
-                mapBoard.showKeyItemsAtLocation();
-                getKeyItemsPrompt(gameBoard);
-
                 player.getInventory().showInventory();
-                mapBoard.showWildlifeAtLocation(wildlife, player, mapBoard, gameBoard);
 
+                lookPrompt(gameBoard);
                 getDirectionPrompt(gameBoard);
                 clearConsole();
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void lookPrompt(GameBoard gameBoard) throws FileNotFoundException {
+        String input = prompter.prompt("If you want to see things that are in this location, type 'look' else type 'no'\n>", "look|no", "Please enter look or no");
+        clearConsole();
+        if (input.equalsIgnoreCase("look")){
+            mapBoard.showItemsAtLocation();
+            printLine(50);
+
+            getItemsPrompt(gameBoard);
+
+            mapBoard.showKeyItemsAtLocation();
+            getKeyItemsPrompt(gameBoard);
+            player.getInventory().showInventory();
+            mapBoard.showWildlifeAtLocation(wildlife, player, mapBoard, gameBoard);
+        }
+
     }
 
     public void printLine(int lines) {
@@ -261,7 +261,8 @@ public class GameBoard {
             directionsStr.append("|");
         }
         directionsStr.append("no|");
-        directionsStr.append("quit");
+        directionsStr.append("quit|");
+        directionsStr.append("help");
         return directionsStr.toString();
     }
 

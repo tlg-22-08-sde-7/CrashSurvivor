@@ -53,11 +53,10 @@ public class Player {
             String choice = prompter.prompt("Do you wish to attack, flee, or use item?",
                     "attack|flee|use item", "Invalid Choice, choose a valid choice!");
             choice.toLowerCase();
+            clearConsole();
             if (choice.equals("attack")) {
                 player.playerAttack(player, wildlife);
-                System.out.println(wildlife.getHealth());
                 wildlife.wildlifeAttack(player, wildlife);
-                System.out.println(player.getHealth());
                 map.displayWildlife(wildlife, file);
                 map.printPlayerInfo(player);
                 wildlifePrompt(gameBoard, wildlife, player, map, file);
@@ -113,7 +112,7 @@ public class Player {
 
     private void eat(String food) {
         Items foodType = inventory.getItemFromInventory(food);
-        setHealth(foodType.getHealth());
+        this.health += foodType.getHealth();
         clearConsole();
 
         System.out.printf("%s, used.\nYour health has been recovered by, %s.\n", food,  foodType.getHealth());
@@ -126,7 +125,7 @@ public class Player {
 
     private void drink(String drink) {
         Items drinkType = inventory.getItemFromInventory(drink);
-        setHydration(drinkType.getHydration());
+        this.hydration += drinkType.getHydration();
         clearConsole();
 
         System.out.printf("%s, used!\nYour hydration has been recovered by, %s.\n", drink,  drinkType.getHydration());
@@ -157,7 +156,7 @@ public class Player {
     }
 
     public void setHealth(int health) {
-        this.health += health;
+        this.health = health;
     }
 
     public int getHydration() {
@@ -165,7 +164,7 @@ public class Player {
     }
 
     public void setHydration(int hydration) {
-        this.hydration += hydration;
+        this.hydration = hydration;
     }
 
     public int getStrength() {
@@ -173,7 +172,7 @@ public class Player {
     }
 
     public void setStrength(int strength) {
-        this.strength += strength;
+        this.strength = strength;
     }
 
     public int getSpeed() {
@@ -181,7 +180,7 @@ public class Player {
     }
 
     public void setSpeed(int speed) {
-        this.speed += speed;
+        this.speed = speed;
     }
 
     public static String getCurrentLocation() {
