@@ -308,7 +308,7 @@ public class GameBoard {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String choiceInput = prompter.prompt("To leave, type exit\n>", "exit|quit|help", "Please type exit to leave!");
+        String choiceInput = prompter.prompt("To leave, type exit. To turn music on, type music on. To turn music off, type music off\n>", "exit|quit|help|music on|music off", "Please type exit to leave!");
         choiceInput.toLowerCase();
         if (choiceInput.equals("exit")) {
             promptStartGame(gameBoard);
@@ -318,6 +318,19 @@ public class GameBoard {
         }
         if (choiceInput.equals("help")) {
             showInstructions(gameBoard);
+        }
+        if (choiceInput.equals("music on")) {
+            try {
+                audioPlayer.start("CrashSurvivor/resources/rain-and-thunder.wav");
+                promptStartGame(gameBoard);
+            } catch (Exception e) {
+
+                e.printStackTrace();
+            }
+        }
+        if (choiceInput.equals("music off")) {
+            audioPlayer.stop();
+            promptStartGame(gameBoard);
         }
     }
 
