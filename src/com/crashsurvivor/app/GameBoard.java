@@ -50,9 +50,11 @@ public class GameBoard {
         System.out.println();
         printLine(150);
         printLine(150);
+
         try {
             audioPlayer.start("CrashSurvivor/resources/rain-and-thunder.wav");
         } catch (Exception e) {
+
             e.printStackTrace();
         }
         System.out.println(ANSI_GREEN + "W E L C O M E  T O  T H E  G A M E!" + ANSI_RESET);
@@ -104,6 +106,7 @@ public class GameBoard {
     }
 
     private void startGame(GameBoard gameBoard) {
+        audioPlayer.stop();
         try (BufferedReader br = new BufferedReader(new FileReader("CrashSurvivor/resources/intro.txt"))) {
             String line1;
             while ((line1 = br.readLine()) != null) {

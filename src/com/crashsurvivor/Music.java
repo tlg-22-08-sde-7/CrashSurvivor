@@ -25,10 +25,10 @@ public class Music {
     }
 
 
-//    public void stop(){
-//        audioClip.close();
-//
-//    }
+    public void stop(){
+        audioClip.close();
+
+    }
 //
 //
 //    public void loopSound(){
