@@ -65,7 +65,7 @@ public class Player {
                 flee();
             } else if (choice.equals("use item")) {
                 gameBoard.clearConsole();
-                List<String> itemsToEat = Arrays.asList(new String[]{"apple", "banana"});
+                List<String> itemsToEat = Arrays.asList(new String[]{"apple", "banana", "coconut"});
                 List<String> itemsToDrink = Arrays.asList(new String[]{"water"});
 
                 player.getInventory().showInventory();
@@ -227,7 +227,7 @@ public class Player {
                 + getStrength() + " | speed = " + getSpeed();
     }
 
-    private void clearConsole() {
+    public void clearConsole() {
         for (int i = 0; i < 100; i++) {
             System.out.println();
         }

@@ -23,7 +23,7 @@ public class GameBoard {
     Wildlife wildlife;
     Music audioPlayer = new Music();
 
-    public void execute(GameBoard gameBoard) {
+    public void execute(GameBoard gameBoard) throws FileNotFoundException {
         clearConsole();
         welcome();
         pressToContinue();
@@ -50,9 +50,11 @@ public class GameBoard {
         System.out.println();
         printLine(150);
         printLine(150);
-        try{
+
+        try {
             audioPlayer.start("CrashSurvivor/resources/rain-and-thunder.wav");
-        }catch(Exception e){
+        } catch (Exception e) {
+
             e.printStackTrace();
         }
         System.out.println(ANSI_GREEN + "W E L C O M E  T O  T H E  G A M E!" + ANSI_RESET);
@@ -79,7 +81,7 @@ public class GameBoard {
         clearConsole();
     }
 
-    private void promptStartGame(GameBoard gameBoard) {
+    private void promptStartGame(GameBoard gameBoard) throws FileNotFoundException {
 
         prompter = new Prompter(new Scanner(System.in));
         System.out.println("1) Start New Game");
@@ -131,8 +133,8 @@ public class GameBoard {
             mapBoard.printPlayerInfo(player);
 
             mapBoard.showItemsAtLocation();
-            getItemsPrompt();
-            getKeyItemsPrompt();
+            getItemsPrompt(gameBoard);
+            getKeyItemsPrompt(gameBoard);
             player.getInventory().showInventory();
 
 
@@ -163,9 +165,12 @@ public class GameBoard {
             printLine(100);
             String inputDirection = prompter.prompt(ANSI_YELLOW + directionPrompt, directionOptions, directionErrMsg + ANSI_RESET);
             printLine(100);
-            inputDirection = inputDirection.toLowerCase().substring(3);
+            inputDirection = inputDirection.equalsIgnoreCase("no") || inputDirection.equalsIgnoreCase("quit") ? inputDirection : inputDirection.toLowerCase().substring(3);
 
             if (inputDirection != null && inputDirection != "") {
+                if (inputDirection.equalsIgnoreCase("quit")) {
+                    quitGame(6, gameBoard);
+                }
                 player.setCurrentLocation(directionsHM.get(inputDirection));
                 clearConsole();
                 System.out.println("Your current location: " + player.getCurrentLocation());
@@ -177,16 +182,14 @@ public class GameBoard {
                 mapBoard.showItemsAtLocation();
                 printLine(50);
 
-                getItemsPrompt();
+                getItemsPrompt(gameBoard);
 
                 mapBoard.showKeyItemsAtLocation();
-                getKeyItemsPrompt();
+                getKeyItemsPrompt(gameBoard);
 
                 player.getInventory().showInventory();
                 mapBoard.showWildlifeAtLocation(wildlife, player, mapBoard, gameBoard);
 
-
-                //
                 getDirectionPrompt(gameBoard);
                 clearConsole();
             }
@@ -202,19 +205,21 @@ public class GameBoard {
         System.out.println();
     }
 
-    private void getItemsPrompt() throws FileNotFoundException {
+    private void getItemsPrompt(GameBoard gameBoard) throws FileNotFoundException {
         //if items in this locations, allow player to pick
         List<Items> allItems = mapBoard.getItemsAtLocation(player.getCurrentLocation());
         if (allItems != null && allItems.size() > 0) {
             //get all items in Player's current location
             String input = prompter.prompt(ANSI_BLUE + "Do you want to pick an item? (Type Get [Item_Name] or press 'no')\n>", convertToPromptOptionItems(allItems), "Please select from the items available!" + ANSI_RESET);
-            input = input.equalsIgnoreCase("no") ? input : input.toLowerCase().substring(4);
-
-            if (!input.equalsIgnoreCase("no")) {
+            input = input.equalsIgnoreCase("no") || input.equalsIgnoreCase("quit") ? input : input.toLowerCase().substring(4);
+            if (input.equalsIgnoreCase("quit")) {
+                quitGame(4, gameBoard);
+            } else if (!input.equalsIgnoreCase("no")) {
                 for (Items item : allItems) {
                     if (item.getName().equalsIgnoreCase(input)) {
                         player.getInventory().addToInventory(item);
                         printLine(100);
+                        pressToContinue();
                         break;
                     }
                 }
@@ -223,17 +228,22 @@ public class GameBoard {
         }
     }
 
-    private void getKeyItemsPrompt() throws FileNotFoundException {
+    private void getKeyItemsPrompt(GameBoard gameBoard) throws FileNotFoundException {
         List<KeyItems> allKeyItems = mapBoard.getKeyItemsAtLocation(player.getCurrentLocation());
         if (allKeyItems != null && allKeyItems.size() > 0) {
             String input = prompter.prompt(ANSI_BLUE + "Do you want to pick a key item? (Type Get [KeyItem_Name] or press 'no')\n>", convertToPromptOptionKeyItems(allKeyItems), "Please select from the key items available!" + ANSI_RESET);
-            input = input.equalsIgnoreCase("no") ? input : input.toLowerCase().substring(4);
+            input = input.equalsIgnoreCase("no") || input.equalsIgnoreCase("quit") ? input : input.toLowerCase().substring(4);
+
+            if (input.equalsIgnoreCase("quit")) {
+                quitGame(5, gameBoard);
+            }
 
             if (!input.equalsIgnoreCase("no")) {
                 for (KeyItems item : allKeyItems) {
                     if (item.getKeyItems().equalsIgnoreCase(input)) {
                         player.getInventory().addToKeyItemsInventory(item);
                         printLine(100);
+                        pressToContinue();
                         break;
                     }
                 }
@@ -250,6 +260,8 @@ public class GameBoard {
             directionsStr.append(dir.getDirectionName());
             directionsStr.append("|");
         }
+        directionsStr.append("no|");
+        directionsStr.append("quit");
         return directionsStr.toString();
     }
 
@@ -261,7 +273,9 @@ public class GameBoard {
             itemsStr.append(item.getName());
             itemsStr.append("|");
         }
-        itemsStr.append("no");
+        itemsStr.append("no|");
+        itemsStr.append("quit");
+
         return itemsStr.toString();
     }
 
@@ -273,7 +287,9 @@ public class GameBoard {
             itemsStr.append(item.getKeyItems().toString());
             itemsStr.append("|");
         }
-        itemsStr.append("no");
+        itemsStr.append("no|");
+        itemsStr.append("quit");
+
         return itemsStr.toString();
     }
 
@@ -281,7 +297,7 @@ public class GameBoard {
         System.out.println("loadSavedGame");
     }
 
-    private void showInstructions(GameBoard gameBoard) {
+    private void showInstructions(GameBoard gameBoard) throws FileNotFoundException {
 
         try (BufferedReader br = new BufferedReader(new FileReader("CrashSurvivor/resources/instructions.txt"))) {
             String line;
@@ -305,7 +321,7 @@ public class GameBoard {
         }
     }
 
-    private void quitGame(int stage, GameBoard gameBoard) {
+    private void quitGame(int stage, GameBoard gameBoard) throws FileNotFoundException {
         Scanner input = new Scanner(System.in);
         String inputQuit = prompter.prompt("Are you sure you want to quit the game?( yes or no ): \n>", "yes|no", "Invalid input!");
         inputQuit.toLowerCase();
@@ -325,6 +341,7 @@ public class GameBoard {
             }
             printLine(150);
             printLine(150);
+            System.exit(0);
         } else {
 
             switch (stage) {
@@ -336,6 +353,15 @@ public class GameBoard {
                     break;
                 case 3:
                     showInstructions(gameBoard);
+                    break;
+                case 4:
+                    getItemsPrompt(gameBoard);
+                    break;
+                case 5:
+                    getKeyItemsPrompt(gameBoard);
+                    break;
+                case 6:
+                    getDirectionPrompt(gameBoard);
                     break;
                 default:
             }
