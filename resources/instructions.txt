@@ -12,7 +12,7 @@ Examples include: "eat apple", "drink water".
 
 Items:
 Items can be collected along the way to add to your backpack, with a maximum of 7 items.
-To collect an item, use grab, followed by the item.
+To collect an item, type get, followed by the item name.
 You must collect all key items and drop them off in the final location.
 Examples for collecting items include: "grab hammer", "grab wood", "grab apple"
 

@@ -20,6 +20,9 @@ public class Inventory {
         for(Items item: inventoryList){
             System.out.println(item.toString());
         }
+        if (inventoryKeyItems.size() <= 0){
+            System.out.println("No Key item(s)");
+        }
         for (KeyItems item: inventoryKeyItems){
             System.out.println(item.toString());
         }
