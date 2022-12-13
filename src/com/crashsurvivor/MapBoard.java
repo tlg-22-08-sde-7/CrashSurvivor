@@ -186,6 +186,7 @@ public class MapBoard {
 
     public Player printPlayerData() throws FileNotFoundException {
         Player player = null;
+        String inputQuit = "";
         System.out.println("Choose from the following characters (" +
                 "Arnold, Jennifer, Jason, or Scarlett):\n");
         List<Player> allPlayers = getAllPlayerData();
@@ -198,10 +199,9 @@ public class MapBoard {
         for (Player p : allPlayers) {
             if (p.getName().toLowerCase().equalsIgnoreCase(chosenPlayer)) {
                 player = p;
-                break;
+                return player;
             }
         }
-
         return player;
     }
 
@@ -224,6 +224,7 @@ public class MapBoard {
     public void printPlayerInfo(Player player) {
         System.out.println(player.toString());
     }
+
     public Player getPlayerInfo(Player player) {
         return player;
     }
@@ -497,6 +498,7 @@ public class MapBoard {
             }
         }
     }
+
     public void readAllJson() throws FileNotFoundException {
 
         JsonElement fileElement = JsonParser.parseReader(new FileReader(input));
@@ -629,6 +631,7 @@ public class MapBoard {
             }
         }
     }
+
     public void displayWildlifePicture(String file) {
         printWildlife(wildlife);
 
@@ -641,11 +644,13 @@ public class MapBoard {
             e.printStackTrace();
         }
     }
+
     private void printCurrentWildlife() {
         System.out.println(wildlife.toString()
                 .replace("[", "")
                 .replace("]", ""));
     }
+
     private void currentWildlifeAtLocation(String wildlifeAtLocation, String wildlifeName, String wildlifeFile) throws FileNotFoundException {
         if (wildlifeAtLocation.equals(wildlife.getName()) && wildlife.getHealth() > 1) {
             displayWildlifePicture(wildlifeFile);
@@ -671,6 +676,7 @@ public class MapBoard {
         }
         return player;
     }
+
     public void printSinglePlayerInfo() {
         System.out.println(player.toString());
     }
