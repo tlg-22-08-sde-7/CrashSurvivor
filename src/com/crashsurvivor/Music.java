@@ -29,10 +29,6 @@ public class Music {
         audioClip.close();
 
     }
-//
-//
-//    public void loopSound(){
-//        audioClip.loop(audioClip.LOOP_CONTINUOUSLY);
-//    }
+
 
 }
