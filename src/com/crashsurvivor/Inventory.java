@@ -39,11 +39,11 @@ public class Inventory {
             allItems.add(ki.getName());
         }
 
-        if (!allItems.contains(item.getName())){
+        if (allItems.size()<8){
             inventoryList.add(item);
             System.out.printf("%s, successfully added to the inventory!\n", item.getName().toUpperCase());
         }else {
-            System.out.printf("%s, is already in the inventory,\n", item.getName());
+            System.out.printf("You already have 7 items in your inventory, you cannot add more than 7 items in inventory");
         }
 
     }
