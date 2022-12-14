@@ -176,9 +176,10 @@ public class GameBoard extends MapBoard{
     }
 
     private void lookPrompt() throws FileNotFoundException {
-        String input = prompter.prompt("If you want to see things that are in this location, type 'look' else type 'no'\n>", "look|no", "Please enter look or no");
+        String input = prompter.prompt("If you want to see things that are in this location, type 'look' else type 'no'\n>", "look|no", "Please type 'look' or 'no'");
         clearConsole();
         if (input.equalsIgnoreCase("look")){
+            System.out.println("Your current location: " + player.getCurrentLocation());
             printMapData();
             printLookData();
             wildlifePrompt();
