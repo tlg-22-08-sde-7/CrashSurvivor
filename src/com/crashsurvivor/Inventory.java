@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Inventory {
-    List<Items> inventoryList;
-    List<KeyItems> inventoryKeyItems;
+    public static List<Items> inventoryList;
+    public List<KeyItems> inventoryKeyItems;
     private final Prompter prompter = new Prompter(new Scanner(System.in));
 
     public Inventory() {

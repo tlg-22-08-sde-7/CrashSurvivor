@@ -447,14 +447,16 @@ public class GameBoard extends MapBoard{
         player.setHealth(newPlayerHealth);
     }
     public void addedPlayerAttributes() {
-        if (player.getInventory().toString().contains("spear")) {
-            player.setStrength(player.getStrength() + 50);
-        }
-        if (player.getInventory().toString().contains("machete")) {
-            player.setStrength(player.getStrength() + 30);
-        }
-        if (player.getInventory().toString().contains("running shoes")) {
-            player.setSpeed(player.getSpeed() + 50);
+        for (Items item : Inventory.inventoryList) {
+            if (Objects.equals(item.getName(), "spear")) {
+                player.setStrength(player.getStrength() + 50);
+            }
+            if (Objects.equals(item.getName(), "machete")) {
+                player.setStrength(player.getStrength() + 30);
+            }
+            if (Objects.equals(item.getName(), "running shoes")) {
+                player.setSpeed(player.getSpeed() + 50);
+            }
         }
     }
     public void flee() throws FileNotFoundException {
