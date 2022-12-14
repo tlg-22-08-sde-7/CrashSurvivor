@@ -19,6 +19,7 @@ public class GameBoard extends MapBoard{
     private static boolean isRunning = false;
     Music audioPlayer = new Music();
     public static String inputDirection;
+    String previousLocation;
 
     public void execute() throws FileNotFoundException {
         clearConsole();
@@ -155,6 +156,7 @@ public class GameBoard extends MapBoard{
                 if (inputDirection.equalsIgnoreCase("help")) {
                     showInstructions();
                 }
+                previousLocation = player.getCurrentLocation();
                 player.setCurrentLocation(directionsHM.get(inputDirection));
                 clearConsole();
                 System.out.println("Your current location: " + player.getCurrentLocation());
@@ -374,33 +376,55 @@ public class GameBoard extends MapBoard{
     }
 
     public void wildlifePrompt() throws FileNotFoundException {
-
         if (wildlifeAtLocation.length() >= 1 && wildlife.getHealth() >= 1 && player.getHealth() >= 1) {
             String choice = prompter.prompt("Do you wish to attack, flee, or use item?",
                     "attack|flee|use item", "Invalid Choice, choose a valid choice!");
             choice.toLowerCase();
+            clearConsole();
+
             if (choice.equals("attack")) {
+                addedPlayerAttributes();
                 playerAttack();
                 wildlifeAttack();
+                if (player.getHealth() < 1) {
+                    gameOver();
+                }
                 currentWildlife();
                 printSinglePlayerInfo();
                 wildlifePrompt();
             } else if (choice.equals("flee")) {
                 flee();
             } else if (choice.equals("use item")) {
-                String useItem = prompter.prompt("Do you wish to eat or drink?", "eat|drink",
-                        "Invalid choice. Please choose a valid choice!");
-                useItem.toLowerCase();
-                if (useItem.equals("eat")) {
+                clearConsole();
+                List<String> itemsToEat = Arrays.asList(new String[]{"apple", "banana", "coconut"});
+                List<String> itemsToDrink = Arrays.asList(new String[]{"water"});
 
-//                    eat();
+                player.getInventory().showInventory();
+                List<Items> itemList = player.getInventory().getInventoryList();
+
+                StringBuilder itemsStr = new StringBuilder();
+                itemsStr.append("(?i)");
+
+                for (Items item : itemList) {
+                    itemsStr.append(item.getName());
+                    itemsStr.append("|");
+                }
+
+                String useItem = prompter.prompt("Type an item name to use from Items inventory?", itemsStr.toString(),
+                        "Invalid choice. Please choose a valid item name from items inventory!");
+                useItem.toLowerCase();
+
+                if (itemsToEat.contains(useItem)) {
+                    player.eat(useItem);
                     currentWildlife();
+
                     printSinglePlayerInfo();
                     wildlifePrompt();
-                } else if (useItem.equals("drink")) {
+                } else if (itemsToDrink.contains(useItem)) {
 
-//                    drink();
+                    player.drink(useItem);
                     currentWildlife();
+
                     printSinglePlayerInfo();
                     wildlifePrompt();
                 }
@@ -421,11 +445,64 @@ public class GameBoard extends MapBoard{
         int newPlayerHealth = player.getHealth() - wildlife.getStrength();
         player.setHealth(newPlayerHealth);
     }
-    public void flee() {
+    public void addedPlayerAttributes() {
+        if (player.getInventory().toString().contains("spear")) {
+            player.setStrength(player.getStrength() + 50);
+        }
+        if (player.getInventory().toString().contains("machete")) {
+            player.setStrength(player.getStrength() + 30);
+        }
+        if (player.getInventory().toString().contains("running shoes")) {
+            player.setSpeed(player.getSpeed() + 50);
+        }
+    }
+    public void flee() throws FileNotFoundException {
+        player.setCurrentLocation(previousLocation);
+        if (inputDirection.equalsIgnoreCase("quit")) {
+            quitGame(6);
+        }
+        if (inputDirection.equalsIgnoreCase("help")) {
+            showInstructions();
+        }
+        previousLocation = player.getCurrentLocation();
+        clearConsole();
+        System.out.println("Your current location: " + player.getCurrentLocation());
+        System.out.println(player.getCurrentLocation());
+        clearData();
+        refreshData();
+        printMapData();
+        System.out.println(player.getLocationVisited());
+        player.getInventory().showInventory();
 
+        lookPrompt();
+        getDirectionPrompt();
+        clearConsole();
     }
 
     public void gameOver() {
-
+        printLine(150);
+        printLine(150);
+        try (BufferedReader br = new BufferedReader(new FileReader("CrashSurvivor/resources/gameover.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(ANSI_YELLOW + "You have failed to Survive!" + ANSI_RESET);
+        System.out.println();
+        System.out.println(ANSI_YELLOW + "Thank you for playing the game!" + ANSI_RESET);
+        try (BufferedReader br = new BufferedReader(new FileReader("CrashSurvivor/resources/banner.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        printLine(150);
+        printLine(150);
+        System.exit(0);
     }
 }
