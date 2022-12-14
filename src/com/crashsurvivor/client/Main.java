@@ -9,6 +9,6 @@ class Main {
     public static void main(String[] args) throws FileNotFoundException {
         Console.clear();
         GameBoard board = new GameBoard();
-        board.execute(board);
+        board.execute();
     }
 }
