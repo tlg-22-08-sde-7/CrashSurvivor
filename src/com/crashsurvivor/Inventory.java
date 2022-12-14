@@ -97,7 +97,7 @@ public class Inventory {
         }
         return item;
     }
-/*    public void dropItems(Items item) {
+   /* public void dropItems(Items item) {
 
         String apple = getItemFromInventory("apple").toString();
         String banana = getItemFromInventory("banana").toString();
@@ -124,10 +124,11 @@ public class Inventory {
         }
 
     }*/
-/*    public void dropKeyItems(KeyItems item) {
+
+    public void dropKeyItems(KeyItems item) {
         if (inventoryList.contains(item))
             inventoryKeyItems.remove(item);
-    }*/
+    }
 
     public List<Items> getInventoryList() {
         return inventoryList;
