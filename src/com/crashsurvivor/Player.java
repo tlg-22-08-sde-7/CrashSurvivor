@@ -22,6 +22,7 @@ public class Player {
     GameBoard gameBoard;
     Items weapons;
     Inventory inventory;
+    Music audioPlayer = new Music();
     private List<String> locationVisited = new ArrayList<>();
 
 
@@ -38,8 +39,6 @@ public class Player {
     private void move() {
 
     }
-
-
 
     private void flee() {
 
