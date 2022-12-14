@@ -1,11 +1,16 @@
 package com.crashsurvivor;
 
+import com.apps.util.Prompter;
+import com.crashsurvivor.app.GameBoard;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Inventory {
     List<Items> inventoryList;
     List<KeyItems> inventoryKeyItems;
+    private final Prompter prompter = new Prompter(new Scanner(System.in));
 
     public Inventory() {
         inventoryList = new ArrayList<>();
@@ -66,6 +71,7 @@ public class Inventory {
         inventoryKeyItems.remove(item);
     }
 
+
     public Items getItemFromInventory(String itemName){
         Items item = null;
         if(inventoryList != null && inventoryList.size() > 0){
@@ -91,6 +97,37 @@ public class Inventory {
         }
         return item;
     }
+/*    public void dropItems(Items item) {
+
+        String apple = getItemFromInventory("apple").toString();
+        String banana = getItemFromInventory("banana").toString();
+        String machete = getItemFromInventory("machete").toString();
+        String runningShoes = getItemFromInventory("running shoes").toString();
+        String coconut = getItemFromInventory("coconut").toString();
+        String spear = getItemFromInventory("spear").toString();
+        if (inventoryList.contains(item)) {
+            if (GameBoard.inputDirection != null && GameBoard.inputDirection != "") {
+                if (GameBoard.inputDirection.equalsIgnoreCase("drop " + getItemFromInventory("water"))) {
+                    item = getItemFromInventory("water");
+                    String input = prompter.prompt("Are you sure you would like to drop " + item + "?"
+                    , "yes|no", "Please choose a correct response!");
+                    if (input.equalsIgnoreCase("yes")) {
+                        removeFromInventory(item);
+                    } else {
+
+                    }
+                }
+
+                }
+                    quitGame(6, gameBoard);
+            inventoryList.remove(item);
+        }
+
+    }*/
+/*    public void dropKeyItems(KeyItems item) {
+        if (inventoryList.contains(item))
+            inventoryKeyItems.remove(item);
+    }*/
 
     public List<Items> getInventoryList() {
         return inventoryList;
