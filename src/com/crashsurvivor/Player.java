@@ -22,6 +22,7 @@ public class Player {
     GameBoard gameBoard;
     Items weapons;
     Inventory inventory;
+    Music audioPlayer = new Music();
     private List<String> locationVisited = new ArrayList<>();
 
 
@@ -55,6 +56,12 @@ public class Player {
             choice.toLowerCase();
             clearConsole();
             if (choice.equals("attack")) {
+                try {
+                    audioPlayer.start("CrashSurvivor/resources/sword-hit.wav");
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
                 player.playerAttack(player, wildlife);
                 wildlife.wildlifeAttack(player, wildlife);
                 map.displayWildlife(wildlife, file);
