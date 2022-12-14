@@ -44,7 +44,7 @@ public class Player {
 
     }
 
-    private void eat(String food) {
+    public void eat(String food) {
         Items foodType = inventory.getItemFromInventory(food);
         this.health += foodType.getHealth();
         clearConsole();
@@ -57,7 +57,7 @@ public class Player {
 
     }
 
-    private void drink(String drink) {
+    public void drink(String drink) {
         Items drinkType = inventory.getItemFromInventory(drink);
         this.hydration += drinkType.getHydration();
         clearConsole();

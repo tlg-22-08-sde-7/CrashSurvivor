@@ -166,7 +166,7 @@ public class MapBoard {
                 .replace("[", "")
                 .replace("]", ""));
     }
-    private void currentWildlifeAtLocation() throws FileNotFoundException {
+    public void currentWildlifeAtLocation() throws FileNotFoundException {
         if (wildlifeAtLocation.equals(wildlife.getName()) && wildlife.getHealth() > 1) {
             printCurrentWildlife();
         }

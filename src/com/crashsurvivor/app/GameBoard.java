@@ -374,11 +374,12 @@ public class GameBoard extends MapBoard{
     }
 
     public void wildlifePrompt() throws FileNotFoundException {
-
         if (wildlifeAtLocation.length() >= 1 && wildlife.getHealth() >= 1 && player.getHealth() >= 1) {
             String choice = prompter.prompt("Do you wish to attack, flee, or use item?",
                     "attack|flee|use item", "Invalid Choice, choose a valid choice!");
             choice.toLowerCase();
+            clearConsole();
+
             if (choice.equals("attack")) {
                 playerAttack();
                 wildlifeAttack();
@@ -388,19 +389,36 @@ public class GameBoard extends MapBoard{
             } else if (choice.equals("flee")) {
                 flee();
             } else if (choice.equals("use item")) {
-                String useItem = prompter.prompt("Do you wish to eat or drink?", "eat|drink",
-                        "Invalid choice. Please choose a valid choice!");
-                useItem.toLowerCase();
-                if (useItem.equals("eat")) {
+                clearConsole();
+                List<String> itemsToEat = Arrays.asList(new String[]{"apple", "banana", "coconut"});
+                List<String> itemsToDrink = Arrays.asList(new String[]{"water"});
 
-//                    eat();
+                player.getInventory().showInventory();
+                List<Items> itemList = player.getInventory().getInventoryList();
+
+                StringBuilder itemsStr = new StringBuilder();
+                itemsStr.append("(?i)");
+
+                for (Items item : itemList) {
+                    itemsStr.append(item.getName());
+                    itemsStr.append("|");
+                }
+
+                String useItem = prompter.prompt("Type an item name to use from Items inventory?", itemsStr.toString(),
+                        "Invalid choice. Please choose a valid item name from items inventory!");
+                useItem.toLowerCase();
+
+                if (itemsToEat.contains(useItem)) {
+                    player.eat(useItem);
                     currentWildlife();
+
                     printSinglePlayerInfo();
                     wildlifePrompt();
-                } else if (useItem.equals("drink")) {
+                } else if (itemsToDrink.contains(useItem)) {
 
-//                    drink();
+                    player.drink(useItem);
                     currentWildlife();
+
                     printSinglePlayerInfo();
                     wildlifePrompt();
                 }
