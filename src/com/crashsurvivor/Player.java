@@ -4,6 +4,9 @@ import com.apps.util.Prompter;
 import com.crashsurvivor.app.GameBoard;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Player {
@@ -15,10 +18,12 @@ public class Player {
     private int speed;
     String currentPlayer;
     private Prompter prompter;
-
+    private String use;
     GameBoard gameBoard;
     Items weapons;
     Inventory inventory;
+    Music audioPlayer = new Music();
+    private List<String> locationVisited = new ArrayList<>();
 
 
     public Player(String name, int health, int hydration, int strength, int speed, String currentLocation) {
@@ -35,70 +40,33 @@ public class Player {
 
     }
 
-
-
-    private void playerAttack(Player player, Wildlife wildlife) {
-
-        int newWildlifeHealth = wildlife.getHealth() - player.getStrength();
-        wildlife.setHealth(newWildlifeHealth);
-    }
-    public void wildlifePrompt(GameBoard gameBoard, Wildlife wildlife, Player player, MapBoard map, String file) throws FileNotFoundException {
-        if (wildlife.getHealth() >= 1 && player.getHealth() >= 1) {
-            prompter = new Prompter(new Scanner(System.in));
-            String choice = prompter.prompt("Do you wish to attack, flee, or use item?",
-                    "attack|flee|use item", "Invalid Choice, choose a valid choice!");
-            choice.toLowerCase();
-            if (choice.equals("attack")) {
-                player.playerAttack(player, wildlife);
-                System.out.println(wildlife.getHealth());
-                wildlife.wildlifeAttack(player, wildlife);
-                System.out.println(player.getHealth());
-                map.displayWildlife(wildlife, file);
-                map.printPlayerInfo(player);
-                wildlifePrompt(gameBoard, wildlife, player, map, file);
-            } else if (choice.equals("flee")) {
-                flee();
-            } else if (choice.equals("use item")) {
-                String useItem = prompter.prompt("Do you wish to eat or drink?", "eat|drink",
-                        "Invalid choice. Please choose a valid choice!");
-                useItem.toLowerCase();
-                if (useItem.equals("eat")) {
-
-//                    eat();
-                    map.displayWildlife(wildlife, file);
-
-                    map.printPlayerInfo(player);
-                    wildlifePrompt(gameBoard, wildlife, player, map, file);
-                } else if (useItem.equals("drink")) {
-
-//                    drink();
-                    map.displayWildlife(wildlife, file);
-
-                    map.printPlayerInfo(player);
-                    wildlifePrompt(gameBoard, wildlife, player, map, file);
-                }
-
-            }
-        } else if (wildlife.getHealth() < 1) {
-            gameBoard.getDirectionPrompt(gameBoard);
-
-        } else if (getHealth() < 1) {
-            gameBoard.gameOver();
-        }
-    }
-
     private void flee() {
 
     }
 
-    private void eat(String food) {
+    public void eat(String food) {
         Items foodType = inventory.getItemFromInventory(food);
-        setHealth(foodType.getHealth());
+        this.health += foodType.getHealth();
+        clearConsole();
+
+        System.out.printf("%s, used.\nYour health has been recovered by, %s.\n", food,  foodType.getHealth());
+
+        getInventory().removeFromInventory(foodType);
+        pressToContinue();
+        getInventory().showInventory();
+
     }
 
-    private void drink(String drink) {
+    public void drink(String drink) {
         Items drinkType = inventory.getItemFromInventory(drink);
-        setHydration(drinkType.getHydration());
+        this.hydration += drinkType.getHydration();
+        clearConsole();
+
+        System.out.printf("%s, used!\nYour hydration has been recovered by, %s.\n", drink,  drinkType.getHydration());
+        getInventory().removeFromInventory(drinkType);
+        pressToContinue();
+        getInventory().showInventory();
+
     }
 
     private void build() {
@@ -168,9 +136,39 @@ public class Player {
     public Inventory getInventory() {
         return inventory;
     }
+
+    public String getUse() {
+        return use;
+    }
+
+    public void setUse(String use) {
+        this.use = use;
+    }
+
+    public List<String> getLocationVisited() {
+        System.out.print("Location Visited: ");
+        return locationVisited;
+    }
+
+    public void setLocationVisited(String locationVisited) {
+        this.locationVisited.add(locationVisited);
+    }
+
     @Override
     public String toString() {
-        return  getName() + " | HP = " + getHealth() + " | hydration = " + getHydration() + " | strength = "
+        return getName() + " | HP = " + getHealth() + " | hydration = " + getHydration() + " | strength = "
                 + getStrength() + " | speed = " + getSpeed();
+    }
+
+    public void clearConsole() {
+        for (int i = 0; i < 100; i++) {
+            System.out.println();
+        }
+    }
+
+    private void pressToContinue() {
+        prompter = new Prompter(new Scanner(System.in));
+        prompter.prompt("\nPress 'c' to continue...", "c", "Invalid Category. Please press 'c'");
+        clearConsole();
     }
 }

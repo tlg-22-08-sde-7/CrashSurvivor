@@ -150,7 +150,7 @@
         {
           "name": "spear",
           "health" : 0,
-          "hydration": 30,
+          "hydration": 0,
           "strength": 50,
           "speed": 0
         }
